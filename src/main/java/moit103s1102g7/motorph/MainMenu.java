@@ -1,17 +1,10 @@
 package moit103s1102g7.motorph;
 
-public class Main {
-    public static void main(String[] args) {
-		PayrollSystem payroll = new PayrollSystem();
-		payroll.callMainMenu();
-	}
-	
+public class MainMenu {
+    	
 	public void callMainMenu() {
-		
 		UserLogin userLogin = new UserLogin();
 		userLogin.setVisible(true);
-		
-		
 	}
     
     public void mainMenu() {
@@ -24,7 +17,6 @@ public class Main {
     	// Repaint the frame
         revalidate();
         repaint(); 
-         
     }
     
     public void profileMenu() {

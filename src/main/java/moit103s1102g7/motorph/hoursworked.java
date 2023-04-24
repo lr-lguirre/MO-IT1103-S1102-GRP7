@@ -25,7 +25,7 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.EventQueue;
 
-public class hoursworked extends JFrame {
+public class HoursWorked extends JFrame {
     private JPanel contentPane;
 	private String[] payPeriod = {"======= Pay Period =======",
 								  "1st Week September 2022", 
@@ -42,7 +42,6 @@ public class hoursworked extends JFrame {
 	private JTextField txtFridayHrs;
 	private JTextField txtTuesdayHrs;
 	private JTextField txtTotalHoursWorked;
-	
 	private PrintNReadTxt printNRead;
 
 	/**
@@ -76,14 +75,14 @@ public class hoursworked extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
-    	    public void windowClosing(WindowEvent e) {
-    	        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-    	        if (confirm == JOptionPane.YES_OPTION) {
-    	            // Close the application
-    	            System.exit(0);
-    	        }
-    	    }
-    	});
+    public void windowClosing(WindowEvent e) {
+            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Close the application
+                System.exit(0);
+            }
+        }
+    });
 		setBounds(100, 100, 450, 389);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

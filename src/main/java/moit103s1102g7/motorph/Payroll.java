@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.AbstractButton.*;
 import java.awt.*;
 
 public class Payroll extends JFrame {
@@ -22,7 +23,7 @@ public class Payroll extends JFrame {
 	
 	Scanner scan = new Scanner(System.in);
 	
-	public PayrollSystem() { // Constructor
+	public void PayrollSystem() { // Constructor
 		
 		// Initialize objects
 		employee = new Employee();
@@ -44,11 +45,9 @@ public class Payroll extends JFrame {
 		btnEmployeeProfile = new JButton("My Employee Profile");
 		btnEmployeeProfile.setBounds(150, 55, 150, 30);
 		btnEmployeeProfile.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				profileMenu();
-				
 			}
 		});
 		
