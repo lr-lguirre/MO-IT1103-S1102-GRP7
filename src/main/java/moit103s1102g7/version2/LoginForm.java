@@ -1,8 +1,15 @@
 package moit103s1102g7.version2;
 
+import java.awt.HeadlessException;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
+
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 
 public class LoginForm extends JFrame implements ActionListener {
     
@@ -50,40 +57,38 @@ public class LoginForm extends JFrame implements ActionListener {
     }
     
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == loginButton) {
-            String username = userTextField.getText();
-            String password = new String(passwordField.getPassword());
-            boolean loggedIn = false;
-            
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader("users.csv"));
-                String line;
-                
-                while ((line = reader.readLine()) != null) {
-                    String[] data = line.split(",");
-                    
-                    if (data[0].equals(username) && data[1].equals(password)) {
-                        JOptionPane.showMessageDialog(null, "Login successful!");
-                        loggedIn = true;
-                        MainWindow mainWindow = new MainWindow(); // Create the main window
-                        mainWindow.setVisible(true); // Display the main window
-                    }
-                }
-                
-                reader.close();
-                
-                if (!loggedIn) {
-                    JOptionPane.showMessageDialog(null, "Invalid username or password!");
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
+public void actionPerformed(ActionEvent e) {
+    String username = userTextField.getText();
+    String password = new String(passwordField.getPassword());
+
+    try {
+        FileReader fileReader = new FileReader("users.csv");
+        CSVParser parser = new CSVParserBuilder().withQuoteChar('"').build();
+        CSVReader reader = new CSVReaderBuilder(fileReader).withCSVParser(parser).build();
+        String[] nextLine;
+        boolean userFound = false;
+
+        while ((nextLine = reader.readNext()) != null) {
+            if (username.equals(nextLine[0]) && password.equals(nextLine[1])) {
+                userFound = true;
+                String accessType = nextLine[2];
+                JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + username + "!");
+                dispose();
+                MainWindow mainWindow = new MainWindow(accessType);
+                break;
             }
-        } else if (e.getSource() == clearButton) {
-            userTextField.setText("");
-            passwordField.setText("");
         }
+
+        if (!userFound) {
+            JOptionPane.showMessageDialog(this, "Invalid username or password. Please try again.");
+        }
+
+    } catch (IOException | CsvValidationException | HeadlessException ex) {
+        JOptionPane.showMessageDialog(this, "Error reading user details file.");
+        ex.printStackTrace();
     }
+}
+
     
     public static void main(String[] args) {
         LoginForm form = new LoginForm();

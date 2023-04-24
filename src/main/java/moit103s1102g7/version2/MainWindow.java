@@ -1,71 +1,69 @@
 package moit103s1102g7.version2;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 
 public class MainWindow extends JFrame {
-    private static final long serialVersionUID = 1L;
     private JTable table;
-    private DefaultTableModel model;
 
-    public MainWindow() {
+    public MainWindow(String accessType) {
         super("Employee Details");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
-        setLocationRelativeTo(null);
 
-        // create table
-        model = new DefaultTableModel();
-        table = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(800, 600));
+        String[] columnNames = {"Employee #", "Last Name", "First Name", "Birthday", "Address", "Phone Number", "SSS #", "Philhealth #", "TIN #", "Pag-ibig #", "Status", "Position", "Immediate Supervisor", "Basic Salary", "Rice Subsidy", "Phone Allowance", "Clothing Allowance", "Gross Semi-monthly Rate", "Hourly Rate"};
+        List<String[]> data = new ArrayList<>();
 
-        // add table to panel
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(scrollPane, BorderLayout.CENTER);
-
-        // add panel to frame
-        setContentPane(panel);
-
-        // read data from CSV file
-        String csvFile = "employeedetails.csv";
-        CSVReader csvReader;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(csvFile));
-            csvReader = new CSVReader(reader);
-            List<String[]> records = csvReader.readAll();
-            for (int i = 0; i < records.size(); i++) {
-                String[] record = records.get(i);
-                for (int j = 0; j < record.length; j++) {
-                    String cell = record[j];
-                    if (cell.startsWith("\"") && cell.endsWith("\"")) {
-                        // handle quoted cell
-                        cell = cell.substring(1, cell.length() - 1);
+            FileReader fileReader = new FileReader("employeedetails.csv");
+            CSVParser csvParser = new CSVParserBuilder().withQuoteChar('"').build();
+            CSVReader csvReader = new CSVReaderBuilder(fileReader).withCSVParser(csvParser).build();// use quote character to catch quoted entries
+            String[] nextRecord;
+
+            while ((nextRecord = csvReader.readNext()) != null) {
+                // check accessType and add corresponding rows to data list
+                if (accessType.equals("hr")) {
+                    if (nextRecord[10].equalsIgnoreCase("active")) { // check status column for "active"
+                        data.add(nextRecord);
                     }
-                    record[j] = cell;
-                }
-                if (i == 0) {
-                    // add headers to model
-                    model.setColumnIdentifiers(record);
-                } else {
-                    // add data to model
-                    model.addRow(record);
+                } else if (accessType.equals("employee")) {
+                    if (nextRecord[0].equals("12345")) { // example: show only data for Employee #
+                        data.add(nextRecord);
+                    }
+                } else if (accessType.equals("admin")) {
+                    data.add(nextRecord);
                 }
             }
+
+            fileReader.close();
             csvReader.close();
-        } catch (IOException | CsvException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvValidationException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        String[][] dataArray = data.toArray(new String[0][0]);
+        table = new JTable(dataArray, columnNames);
+        table.setPreferredScrollableViewportSize(new Dimension(1200, 700));
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        JScrollPane scrollPane = new JScrollPane(table);
+        getContentPane().add(scrollPane);
+
+        pack();
+        setVisible(true);
     }
 }
