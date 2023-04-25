@@ -53,42 +53,49 @@ public class LoginForm extends JFrame implements ActionListener {
         clearButton.addActionListener(this);
         panel.add(clearButton);
         
+        passwordField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                LoginForm.this.actionPerformed(e);
+            }
+        });
+        
         add(panel);
     }
+
     
     @Override
-public void actionPerformed(ActionEvent e) {
-    String username = userTextField.getText();
-    String password = new String(passwordField.getPassword());
-
-    try {
-        FileReader fileReader = new FileReader("users.csv");
-        CSVParser parser = new CSVParserBuilder().withQuoteChar('"').build();
-        CSVReader reader = new CSVReaderBuilder(fileReader).withCSVParser(parser).build();
-        String[] nextLine;
-        boolean userFound = false;
-
-        while ((nextLine = reader.readNext()) != null) {
-            if (username.equals(nextLine[0]) && password.equals(nextLine[1])) {
-                userFound = true;
-                String accessType = nextLine[2];
-                JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + username + "!");
-                dispose();
-                MainWindow mainWindow = new MainWindow(accessType);
-                break;
+    public void actionPerformed(ActionEvent e) {
+        String username = userTextField.getText();
+        String password = new String(passwordField.getPassword());
+    
+        try {
+            FileReader fileReader = new FileReader("users.csv");
+            CSVParser parser = new CSVParserBuilder().withQuoteChar('"').build();
+            CSVReader reader = new CSVReaderBuilder(fileReader).withCSVParser(parser).build();
+            String[] nextLine;
+            boolean userFound = false;
+    
+            while ((nextLine = reader.readNext()) != null) {
+                if (username.equals(nextLine[0]) && password.equals(nextLine[1])) {
+                    userFound = true;
+                    String accessType = nextLine[2];
+                    JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + username + "!");
+                    dispose();
+                    MainWindow mainWindow = new MainWindow(accessType);
+                    mainWindow.setVisible(true);
+                    break;
+                }
             }
+    
+            if (!userFound) {
+                JOptionPane.showMessageDialog(this, "Invalid username or password");
+            }
+    
+            reader.close();
+        } catch (IOException | CsvValidationException | HeadlessException ex) {
+            ex.printStackTrace();
         }
-
-        if (!userFound) {
-            JOptionPane.showMessageDialog(this, "Invalid username or password. Please try again.");
-        }
-
-    } catch (IOException | CsvValidationException | HeadlessException ex) {
-        JOptionPane.showMessageDialog(this, "Error reading user details file.");
-        ex.printStackTrace();
     }
-}
-
     
     public static void main(String[] args) {
         LoginForm form = new LoginForm();
