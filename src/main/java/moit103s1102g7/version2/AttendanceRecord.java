@@ -1,71 +1,51 @@
 package moit103s1102g7.version2;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 public class AttendanceRecord {
-    private int employeeNumber;
-    private String lastName;
-    private String firstName;
-    private LocalDate date;
-    private LocalTime timeIn;
-    private LocalTime timeOut;
-
-    public AttendanceRecord(int employeeNumber, String lastName, String firstName, LocalDate date, LocalTime timeIn, LocalTime timeOut) {
-        this.employeeNumber = employeeNumber;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.date = date;
-        this.timeIn = timeIn;
-        this.timeOut = timeOut;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private double semiMonthlyHours;
+    private double monthlyHours;
+    private int employeeId;
+    private String employeeName;
+    
+    public AttendanceRecord(LocalDate startDate, LocalDate endDate, int employeeId, String employeeName) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.employeeId = employeeId;
+        this.employeeName = employeeName;
+        this.semiMonthlyHours = 0;
+        this.monthlyHours = 0;
     }
-
-    public int getEmployeeNumber() {
-        return employeeNumber;
+    
+    public void addAttendance(LocalDate date, double hours) {
+        if (date.isAfter(startDate) && date.isBefore(endDate.plusDays(1))) {
+            semiMonthlyHours += hours;
+            monthlyHours += hours;
+        }
     }
-
-    public void setEmployeeNumber(int employeeNumber) {
-        this.employeeNumber = employeeNumber;
+    
+    public double getSemiMonthlyHours() {
+        return semiMonthlyHours;
     }
-
-    public String getLastName() {
-        return lastName;
+    
+    public double getMonthlyHours() {
+        return monthlyHours;
     }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    
+    public int getEmployeeId() {
+        return employeeId;
     }
-
-    public String getFirstName() {
-        return firstName;
+    
+    public String getEmployeeName() {
+        return employeeName;
     }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTimeIn() {
-        return timeIn;
-    }
-
-    public void setTimeIn(LocalTime timeIn) {
-        this.timeIn = timeIn;
-    }
-
-    public LocalTime getTimeOut() {
-        return timeOut;
-    }
-
-    public void setTimeOut(LocalTime timeOut) {
-        this.timeOut = timeOut;
+    
+    public String toString() {
+        return "Employee " + employeeId + " (" + employeeName + ")\n" +
+               "Semi-monthly hours: " + semiMonthlyHours + "\n" +
+               "Monthly hours: " + monthlyHours + "\n";
     }
 }
-
