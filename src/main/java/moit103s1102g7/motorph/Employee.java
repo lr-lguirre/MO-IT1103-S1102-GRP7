@@ -14,7 +14,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
 
 public class Employee extends JFrame {
-    private JLabel lblPersonalInfo,lblSalaryInfo, lblEmployeeNo, lblLastName, 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JLabel lblPersonalInfo,lblSalaryInfo, lblEmployeeNo, lblLastName, 
 	lblFirstName, lblBirthday, lblAddress, lblPhoneNo, lblSssNo, lblPhic, lblTinNo,
 	lblHdmfNo;
 	private JTextField txtEmployeeNo, txtLastName, 

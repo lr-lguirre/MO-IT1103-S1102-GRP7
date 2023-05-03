@@ -1,4 +1,4 @@
-package moit103s1102g7.version4;
+package moit103s1102g7.prototype;
 
 public class exit {
     public static void Exit() {

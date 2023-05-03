@@ -1,4 +1,4 @@
-package moit103s1102g7.version3;
+package moit103s1102g7.comprog1;
 
 import java.io.BufferedReader;
 import java.io.File;

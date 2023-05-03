@@ -1,4 +1,4 @@
-package moit103s1102g7.version4;
+package moit103s1102g7.prototype;
 
 import java.awt.EventQueue;
 
@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-public class Login extends JFrame {
+public class JpAdmLogin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField username;
@@ -30,7 +30,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					JpAdmLogin frame = new JpAdmLogin();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,8 +42,8 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Login() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/org/springframework/beans/factory/xml/spring-beans.gif")));
+	public JpAdmLogin() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JpAdmLogin.class.getResource("/org/springframework/beans/factory/xml/spring-beans.gif")));
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -55,10 +55,10 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("MOTORPH Login");
+		JLabel lblNewLabel = new JLabel("MOTORPH Admin Login");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		lblNewLabel.setBounds(123, 30, 177, 36);
+		lblNewLabel.setBounds(134, 29, 216, 36);
 		contentPane.add(lblNewLabel);
 		
 		username = new JTextField();
@@ -82,8 +82,8 @@ public class Login extends JFrame {
 		pass.setBounds(141, 125, 198, 20);
 		contentPane.add(pass);
 		
-		JButton btnNewButton = new JButton("Login");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					authentication.authenticate();
@@ -93,19 +93,19 @@ public class Login extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 12));
-		btnNewButton.setBounds(145, 182, 89, 23);
-		contentPane.add(btnNewButton);
+		btnLogin.setFont(new Font("Arial", Font.PLAIN, 12));
+		btnLogin.setBounds(145, 182, 89, 23);
+		contentPane.add(btnLogin);
 		
-		JButton btnNewButton_1 = new JButton("Exit");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				exit.Exit();
 			}
 		});
-		btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 12));
-		btnNewButton_1.setBounds(250, 182, 89, 23);
-		contentPane.add(btnNewButton_1);
+		btnExit.setFont(new Font("Arial", Font.PLAIN, 12));
+		btnExit.setBounds(250, 182, 89, 23);
+		contentPane.add(btnExit);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
