@@ -6,11 +6,9 @@ import java.util.List;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 
-import moit103s1102g7.prototype.CsvEmployeeDetails.csvEmployeeDetails;
-
 public class readCsvFiles {
 
-	public static List<EmployeeDetails> EmployeeDetails () {
+	public static List<employeeDetails> employeeDetails () {
 		String f = "employeedetails.csv";
 		FileReader reader = null;
 		try {
@@ -19,8 +17,26 @@ public class readCsvFiles {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			CsvToBeanBuilder<EmployeeDetails> builder = new CsvToBeanBuilder<>(reader);
-			List<EmployeeDetails> csvBeanReader = builder.withType(EmployeeDetails.class)
+			CsvToBeanBuilder<employeeDetails> builder = new CsvToBeanBuilder<>(reader);
+			List<employeeDetails> csvBeanReader = builder.withType(employeeDetails.class)
+					.withIgnoreLeadingWhiteSpace(true)
+					.withIgnoreEmptyLine(true)
+					.build()
+					.parse();
+			return csvBeanReader;	
+	}
+	
+	public static List<employeeLogin> employeeLogin () {
+		String f = "employeeLogin.csv";
+		FileReader reader = null;
+		try {
+			reader = new FileReader(f);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			CsvToBeanBuilder<employeeLogin> builder = new CsvToBeanBuilder<>(reader);
+			List<employeeLogin> csvBeanReader = builder.withType(employeeLogin.class)
 					.withIgnoreLeadingWhiteSpace(true)
 					.withIgnoreEmptyLine(true)
 					.build()

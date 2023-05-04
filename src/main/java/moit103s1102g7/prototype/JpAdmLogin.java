@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -13,12 +14,15 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 
 public class JpAdmLogin extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField username;
 	private JPasswordField pass;
@@ -27,14 +31,13 @@ public class JpAdmLogin extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JpAdmLogin frame = new JpAdmLogin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		EventQueue.invokeLater(() -> {
+			try {
+				final JpAdmLogin frame = new JpAdmLogin();
+				frame.setVisible(true);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
@@ -55,7 +58,7 @@ public class JpAdmLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("MOTORPH Admin Login");
+		final JLabel lblNewLabel = new JLabel("MOTORPH Admin Login");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		lblNewLabel.setBounds(134, 29, 216, 36);
@@ -72,7 +75,7 @@ public class JpAdmLogin extends JFrame {
 		lblNewLabel_1.setBounds(30, 80, 66, 17);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Password");
+		final JLabel lblNewLabel_1_1 = new JLabel("Password");
 		lblNewLabel_1_1.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblNewLabel_1_1.setBounds(30, 127, 66, 17);
 		contentPane.add(lblNewLabel_1_1);
@@ -81,16 +84,24 @@ public class JpAdmLogin extends JFrame {
 		pass.setFont(new Font("Arial", Font.PLAIN, 12));
 		pass.setBounds(141, 125, 198, 20);
 		contentPane.add(pass);
+		;
 		
-		JButton btnLogin = new JButton("Login");
+		final JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					authentication.authenticate();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				final char[] pwd = pass.getPassword();
+				final String uid = username.getText();
+				if (helperAuth.admAuth(uid, pwd)) {
+					JOptionPane.showMessageDialog(contentPane,
+			                "Successful Login.");
+				} else {
+		            JOptionPane.showMessageDialog(contentPane,
+		                    "Invalid password. Try again.",
+		                    "Error Message",
+		                    JOptionPane.ERROR_MESSAGE);
 				}
+				Arrays.fill(pwd, '0');
+		        pass.selectAll();
 			}
 		});
 		btnLogin.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -100,19 +111,11 @@ public class JpAdmLogin extends JFrame {
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				exit.Exit();
+				System.exit(EXIT_ON_CLOSE);
 			}
 		});
 		btnExit.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnExit.setBounds(250, 182, 89, 23);
 		contentPane.add(btnExit);
-	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
 	}
 }

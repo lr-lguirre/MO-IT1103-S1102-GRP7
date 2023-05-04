@@ -2,7 +2,7 @@ package moit103s1102g7.prototype;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class EmployeeDetails {
+public class employeeDetails {
 		
 	@CsvBindByName( column = "Employee #")
 	private String empid;
