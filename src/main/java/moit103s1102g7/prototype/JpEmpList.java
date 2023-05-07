@@ -15,10 +15,14 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
@@ -52,14 +56,12 @@ public class JpEmpList extends JFrame {
 	 * Launch the application.
 	**/
 	public static void jpEmpList(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JpEmpList frame = new JpEmpList();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		EventQueue.invokeLater(() -> {
+			try {
+				JpEmpList frame = new JpEmpList();
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
@@ -85,13 +87,18 @@ public class JpEmpList extends JFrame {
 	    for (int i = 0; i < data.size(); i += 3) {
 	        model.addRow(new Object[] {data.get(i), data.get(i+1), data.get(i+2)});
 	    }
-	    final JTable tblEmloyeeDetails = new JTable(model) {
-	        @Override
+	    final JTable tblEmployeeDetails = new JTable(model) {
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
 	        public boolean isCellEditable(int row, int column) {
 	            return false;
 	        }
 	    };
-	    final JScrollPane scrollPane = new JScrollPane(tblEmloyeeDetails);
+	    final JScrollPane scrollPane = new JScrollPane(tblEmployeeDetails);
 	    scrollPane.setBounds(10, 32, 1031, 169);
 	    contentPane.add(scrollPane);
 	    
@@ -290,38 +297,98 @@ public class JpEmpList extends JFrame {
 	    contentPane.add(btnAttendance);
 	    
 	    JButton btnPayroll = new JButton("Payroll");
-	    btnPayroll.setBounds(635, 566, 89, 23);
+	    btnPayroll.setBounds(226, 566, 89, 23);
 	    contentPane.add(btnPayroll);
 	    
-	    tblEmloyeeDetails.getSelectionModel().addListSelectionListener((ListSelectionEvent event) -> {
-		    // do something with the selected row data
-		    final int selectedRow = tblEmloyeeDetails.getSelectedRow();
-		    final String empNumber = tblEmloyeeDetails.getValueAt(selectedRow, 0).toString();
-		    final String lastName = tblEmloyeeDetails.getValueAt(selectedRow, 1).toString();
-		    final String firstName = tblEmloyeeDetails.getValueAt(selectedRow, 2).toString();
-		    System.out.println("Selected Employee: " + empNumber + " " + lastName + ", " + firstName);
-		    lblempID.setText(empNumber);
-		    final String empname = (firstName+" "+lastName);
-		    lblempName.setText(empname);
-		    final ArrayList<Object> empdata = empData(empNumber);
-		    txtBirthday.setText(empdata.get(0).toString());
-		    txtAddress.setText(empdata.get(1).toString());
-		    txtPhone.setText(empdata.get(2).toString());
-		    txtSSS.setText(empdata.get(3).toString());
-		    txtPhilhealth.setText(empdata.get(4).toString());
-		    txtTIN.setText(empdata.get(5).toString());
-		    txtPagibig.setText(empdata.get(6).toString());
-		    txtStatus.setText(empdata.get(7).toString());
-		    txtPosition.setText(empdata.get(8).toString());
-		    txtSupervisor.setText(empdata.get(9).toString());
-		    txtBasic.setText(empdata.get(10).toString());
-		    txtRice.setText(empdata.get(11).toString());
-		    txtPhoneAllowance.setText(empdata.get(12).toString());
-		    txtClothing.setText(empdata.get(13).toString());
-		    txtGross.setText(empdata.get(14).toString());
-		    txtHourly.setText(empdata.get(15).toString());
+	    final JButton btnClear = new JButton("Clear");
+	    btnClear.addActionListener((ActionEvent e) -> {
+			lblempID.setText("");
+			lblempName.setText("");
+			txtBirthday.setText("");
+			txtAddress.setText("");
+			txtPhone.setText("");
+			txtSSS.setText("");
+			txtPhilhealth.setText("");
+			txtTIN.setText("");
+			txtPagibig.setText("");
+			txtStatus.setText("");
+			txtPosition.setText("");
+			txtSupervisor.setText("");
+			txtBasic.setText("");
+			txtRice.setText("");
+			txtPhoneAllowance.setText("");
+			txtClothing.setText("");
+			txtGross.setText("");
+			txtHourly.setText("");
+			SwingUtilities.invokeLater(new Runnable() {
+			    public void run() {
+			        if (tblEmployeeDetails.getSelectedRowCount() > 0) {
+						tblEmployeeDetails.clearSelection();
+					}
+			    }
+			});
 		});
+	    btnClear.setBounds(680, 566, 89, 23);
+	    contentPane.add(btnClear);
+	    
+	    // Render the table with Employee ID, Last Name and First Name, enforce only one row is selected
+	    tblEmployeeDetails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    tblEmployeeDetails.getSelectionModel().addListSelectionListener((ListSelectionEvent event) -> {
+	    	 if (!event.getValueIsAdjusting()) {
+	    	        ListSelectionModel tblModel = tblEmployeeDetails.getSelectionModel();
+	    	        int selectedRow = tblModel.getMinSelectionIndex();
+	    	        // Handle selected row here
+	    	        if (selectedRow >= 0 && selectedRow < tblEmployeeDetails.getRowCount()) {
+	    		        final String empNumber = tblEmployeeDetails.getValueAt(selectedRow, 0).toString();
+	    		        final String lastName = tblEmployeeDetails.getValueAt(selectedRow, 1).toString();
+	    		        final String firstName = tblEmployeeDetails.getValueAt(selectedRow, 2).toString();
+	    		        lblempID.setText(empNumber);
+	    		        final String empname = (firstName+" "+lastName);
+	    		        lblempName.setText(empname);
+	    		        final ArrayList<Object> empdata = empData(empNumber);
+	    		        txtBirthday.setText(empdata.get(0).toString());
+	    		        txtAddress.setText(empdata.get(1).toString());
+	    		        txtPhone.setText(empdata.get(2).toString());
+	    		        txtSSS.setText(empdata.get(3).toString());
+	    		        txtPhilhealth.setText(empdata.get(4).toString());
+	    		        txtTIN.setText(empdata.get(5).toString());
+	    		        txtPagibig.setText(empdata.get(6).toString());
+	    		        txtStatus.setText(empdata.get(7).toString());
+	    		        txtPosition.setText(empdata.get(8).toString());
+	    		        txtSupervisor.setText(empdata.get(9).toString());
+	    		        txtBasic.setText(empdata.get(10).toString());
+	    		        txtRice.setText(empdata.get(11).toString());
+	    		        txtPhoneAllowance.setText(empdata.get(12).toString());
+	    		        txtClothing.setText(empdata.get(13).toString());
+	    		        txtGross.setText(empdata.get(14).toString());
+	    		        txtHourly.setText(empdata.get(15).toString());
+	    		    }
+	    	    }
+	    	// do something with the selected row data
+		    // final int selectedRow = tblEmployeeDetails.getSelectedRow();
+		    
+		});
+	    
+	    tblEmployeeDetails.addMouseListener(new MouseAdapter() {
+	        public void mouseClicked(MouseEvent e) {
+	            if (e.getClickCount() == 2) {
+	                JTable target = (JTable)e.getSource();
+	                int row = target.getSelectedRow();
+	                // Handle double-click event here
+	                // For example, open a dialog to edit the content
+	                // of the selected row
+	                final String empNumber = tblEmployeeDetails.getValueAt(row, 0).toString();
+	                final String lastName = tblEmployeeDetails.getValueAt(row, 1).toString();
+	                final String firstName = tblEmployeeDetails.getValueAt(row, 2).toString();
+	                // ...
+	            }
+	        }
+	    });
 	}
+	
+	
+	
+	
 	
 	public static ArrayList<Object> empList () {
 		final List<employeeDetails> employeeDetails = readCsvFiles.employeeDetails();
