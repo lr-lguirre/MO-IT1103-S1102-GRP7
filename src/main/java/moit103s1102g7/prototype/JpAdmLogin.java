@@ -10,12 +10,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class JpAdmLogin extends JFrame {
 
@@ -81,6 +85,29 @@ public class JpAdmLogin extends JFrame {
 		contentPane.add(lblNewLabel_1_1);
 		
 		pass = new JPasswordField();
+		pass.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+					final char[] pwd = pass.getPassword();
+					final String uid = username.getText();
+					if (helperAuth.admAuth(uid, pwd)) {
+						username.setText(null);
+						pass.setText(null);
+						JOptionPane.showMessageDialog(contentPane, "Successful Login.");
+						JpEmpList frame = new JpEmpList();
+						JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+				        loginWindow.dispose();
+			            frame.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(contentPane, "Invalid password. Try again.", "Error Message",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					Arrays.fill(pwd, '0');
+					pass.selectAll();
+				}
+			}
+		});
 		pass.setFont(new Font("Arial", Font.PLAIN, 12));
 		pass.setBounds(141, 125, 198, 20);
 		contentPane.add(pass);
@@ -88,21 +115,26 @@ public class JpAdmLogin extends JFrame {
 		
 		final JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				final char[] pwd = pass.getPassword();
-				final String uid = username.getText();
-				if (helperAuth.admAuth(uid, pwd)) {
-					JOptionPane.showMessageDialog(contentPane,
-			                "Successful Login.");
-				} else {
-		            JOptionPane.showMessageDialog(contentPane,
-		                    "Invalid password. Try again.",
+		    public void actionPerformed(ActionEvent e) {
+		        final char[] pwd = pass.getPassword();
+		        final String uid = username.getText();
+		        if (helperAuth.admAuth(uid, pwd)) {
+		            username.setText(null);
+		            pass.setText(null);
+		            JOptionPane.showMessageDialog(contentPane, "Successful Login.");
+		            JpEmpList frame = new JpEmpList();
+		            frame.setVisible(true);
+		            // Dismiss the login window
+		            JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(btnLogin);
+		            loginWindow.dispose();
+		        } else {
+		            JOptionPane.showMessageDialog(contentPane, "Invalid password. Try again.",
 		                    "Error Message",
 		                    JOptionPane.ERROR_MESSAGE);
-				}
-				Arrays.fill(pwd, '0');
+		        }
+		        Arrays.fill(pwd, '0');
 		        pass.selectAll();
-			}
+		    }
 		});
 		btnLogin.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnLogin.setBounds(145, 182, 89, 23);

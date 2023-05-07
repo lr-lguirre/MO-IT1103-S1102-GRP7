@@ -25,7 +25,7 @@ public class employeeDetails {
 	@CsvBindByName( column = "SSS #")
 	private String empSSS;
 	
-	@CsvBindByName( column = "Philhealt #")
+	@CsvBindByName( column = "Philhealth #")
 	private String empPhilhealth;
     
     @CsvBindByName( column = "TIN #")
@@ -118,13 +118,13 @@ public class employeeDetails {
 	}
 
 	public String getEmpPhilhealth() {
-		return empPhilhealth;
+	    return empPhilhealth;
 	}
 
 	public void setEmpPhilhealth(String empPhilhealth) {
-		this.empPhilhealth = empPhilhealth;
-	}
-
+	    this.empPhilhealth = empPhilhealth;
+	} 
+	
 	public String getEmpTIN() {
 		return empTIN;
 	}
