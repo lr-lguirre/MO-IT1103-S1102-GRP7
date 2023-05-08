@@ -19,6 +19,7 @@ import moit103s1102g7.prototype.CalculateSSS;
 import moit103s1102g7.prototype.CalculateWitholdingTax;
 import moit103s1102g7.prototype.Employee;
 import moit103s1102g7.prototype.HoursWorked;
+import moit103s1102g7.prototype.PrintNReadTxt;
 
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;

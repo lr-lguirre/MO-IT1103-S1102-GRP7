@@ -26,8 +26,6 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-import m0it103s1102g7.payrollsystem.PrintNReadTxt;
-
 public class HoursWorked extends JFrame {
 
 	private JPanel contentPane;

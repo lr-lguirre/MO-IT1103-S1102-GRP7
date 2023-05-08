@@ -19,8 +19,6 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-import m0it103s1102g7.payrollsystem.PrintNReadTxt;
-
 import java.awt.Color;
 import javax.swing.JTextField;
 

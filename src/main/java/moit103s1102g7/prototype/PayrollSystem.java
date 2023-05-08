@@ -13,8 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import m0it103s1102g7.payrollsystem.PrintNReadTxt;
-
 public class PayrollSystem extends JFrame {
 
 	

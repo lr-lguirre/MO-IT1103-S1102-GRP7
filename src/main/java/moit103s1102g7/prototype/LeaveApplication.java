@@ -47,126 +47,103 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import java.awt.Dimension;
 import com.toedter.calendar.JDateChooser;
+import java.nio.charset.Charset;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 
 public class LeaveApplication extends JFrame {
 
-	String path = "csv/AppliedLeaves.csv",  line = "";
+	String path = "leaves.csv";
+	String line = "";
 	SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd yyyy");
 	
 	private static final long serialVersionUID = 1L;
-	private UserLogin login = new UserLogin();
+	// private UserLogin login = new UserLogin();
 	private JTable table;
 	private JComboBox<Object> comboBoxLeaveType;
-	private JDateChooser txtStartDate, txtEndDate;
+	private JDateChooser txtStartDate;
+	private JDateChooser txtEndDate;
 	private String newLeaveDetails[] = new String[6];
 	private LeaveDetails[] leave = new LeaveDetails[50];
-	private int SlCount, VlCount, ElCount, leaveCount, count;
+	private int SlCount;
+	private int VlCount;
+	private int ElCount;
+	private int leaveCount;
+	private int count;
 	private String employeeNumber;
 	private JTextArea txtLeaveDescription;
 	private Object[][] data;
-	private JButton btnDelete, btnCancel_1;
+	private JButton btnDelete;
+	private JButton btnCancel_1;
 	private LeaveDetails deletedLeave;
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					LeaveApplication frame = new LeaveApplication();
-//					frame.readCsvFiles();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-	
-	public void applyLeave() {
-//		System.out.println(login.getEmployeeNumber());
-		readCsvFiles();
-		setVisible(true);
+	public static void leaves(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LeaveApplication frame = new LeaveApplication();
+					frame.readCsvFiles();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
-	public void readCsvFiles() {
-		count = 0;
-		leaveCount = 0;
-		
-		int i = 0;
-		try {
-	        BufferedReader br = new BufferedReader(new FileReader(path));
-	        while ((line = br.readLine()) != null) {
-
-	            String[] values = line.split(",");
-	            
-	         // check if any value is empty or null
-	            boolean hasEmptyValue = false;
-	            for (String value : values) {
-	                if (value == null || value.isEmpty()) {
-	                    hasEmptyValue = true;
-	                    break;}
-	            }
-	            	if (hasEmptyValue) {
-	                // skip this line
-	                continue;
-	            }
-	            leave[i] = new LeaveDetails(values[0], values[1], values[2], values[3], values[4], values[5]);
-	            count++;
-	            i++;
-	        }
-	        br.close();
-	    } catch (FileNotFoundException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-			e.printStackTrace();
-		}
- 
-	        for (int k = 0; k < leave.length; k++) {
-	        	if (leave[k] != null && leave[k].employeeNumber.equals(login.getEmployeeNumber())) {
-	        		leaveCount++;
-	        		if (leave[k].leaveType.equals("Sick Leave") && !leave[k].leaveStatus.equals("Cancelled")) {
-	        			SlCount++;
-	        		} else if (leave[k].leaveType.equals("Vacation Leave") && !leave[k].leaveStatus.equals("Cancelled")) {
-	        			VlCount++;
-	        		} else if (leave[k].leaveType.equals("Emergency Leave") && !leave[k].leaveStatus.equals("Cancelled")) {
-	        			ElCount++;
-	        		}
-	        	}
-	        }
-	        System.out.println("Leave Count: " + leaveCount + 
-	        			"\n" + "Sick Leaves: " + SlCount +
-	        			"\n" + "Vacation Leaves: " + VlCount +
-	        			"\n" + "Emergency Leaves: " + ElCount + "\n");
-	        //Populate JTable with data
-			data = new Object[leaveCount][5];
-			
-			
-			int counter = 0;
-			for (int j = leave.length - 1; j >= 0; j--) {
-			    if (leave[j] != null && leave[j].employeeNumber.equals(login.getEmployeeNumber())) {
-			        data[counter][0] = leave[j].leaveType;
-			        data[counter][1] = leave[j].startDate;
-			        data[counter][2] = leave[j].endDate;
-			        data[counter][3] = leave[j].leaveStatus;
-			        data[counter][4] = leave[j].leaveDescription;
-			        counter++;
-			    }
-			}
-			table.setModel(new DefaultTableModel(
-			    Arrays.copyOfRange(data, 0, counter),
-			    new String[] {
-			        "Leave Type", "Start Date", "End Date", "Leave Status", "Leave Description"
-			    }
-			));
-
-			table.getColumnModel().getColumn(4).setPreferredWidth(84);
-	        }
+	/*
+	 * public void applyLeave() { // System.out.println(login.getEmployeeNumber());
+	 * readCsvFiles(); setVisible(true); }
+	 */
+	
+	/*
+	 * public void readCsvFiles() { count = 0; leaveCount = 0;
+	 * 
+	 * int i = 0; try (BufferedReader br = Files.newBufferedReader(Paths.get(path),
+	 * Charset.defaultCharset())) { while ((line = br.readLine()) != null) {
+	 * 
+	 * String[] values = line.split(",");
+	 * 
+	 * // check if any value is empty or null boolean hasEmptyValue = false; for
+	 * (String value : values) { if (value == null || value.isEmpty()) {
+	 * hasEmptyValue = true; break;} } if (hasEmptyValue) { // skip this line
+	 * continue; } leave[i] = new LeaveDetails(values[0], values[1], values[2],
+	 * values[3], values[4], values[5]); count++; i++; } } catch (IOException e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * Object login; for (LeaveDetails aLeave : leave) { if (aLeave != null &&
+	 * aLeave.employeeNumber.equals(((Object) login).getEmployeeNumber())) {
+	 * leaveCount++; if (aLeave.leaveType.equals("Sick Leave") &&
+	 * !"Cancelled".equals(aLeave.leaveStatus)) { SlCount++; } else if
+	 * (aLeave.leaveType.equals("Vacation Leave") &&
+	 * !"Cancelled".equals(aLeave.leaveStatus)) { VlCount++; } else if
+	 * (aLeave.leaveType.equals("Emergency Leave") &&
+	 * !"Cancelled".equals(aLeave.leaveStatus)) { ElCount++; } } }
+	 * System.out.println("Leave Count: " + leaveCount + "\n" + "Sick Leaves: " +
+	 * SlCount + "\n" + "Vacation Leaves: " + VlCount + "\n" + "Emergency Leaves: "
+	 * + ElCount + "\n"); //Populate JTable with data data = new
+	 * Object[leaveCount][5];
+	 * 
+	 * 
+	 * int counter = 0; for (int j = leave.length - 1; j >= 0; j--) { if (leave[j]
+	 * != null && leave[j].employeeNumber.equals(login.getEmployeeNumber())) {
+	 * data[counter][0] = leave[j].leaveType; data[counter][1] = leave[j].startDate;
+	 * data[counter][2] = leave[j].endDate; data[counter][3] = leave[j].leaveStatus;
+	 * data[counter][4] = leave[j].leaveDescription; counter++; } }
+	 * table.setModel(new DefaultTableModel( Arrays.copyOfRange(data, 0, counter),
+	 * new String[] { "Leave Type", "Start Date", "End Date", "Leave Status",
+	 * "Leave Description" } ));
+	 * 
+	 * table.getColumnModel().getColumn(4).setPreferredWidth(84); }
+	 */
 
 	/**
 	 * Create the frame.
 	 */
 	public LeaveApplication() {
+
 		setTitle("MotorPH Employee Leave");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600,419);
@@ -363,3 +340,5 @@ public class LeaveApplication extends JFrame {
 				}
 			}
 		});
+	}
+}
