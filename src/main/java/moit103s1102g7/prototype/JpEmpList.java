@@ -81,9 +81,9 @@ public class JpEmpList extends JFrame {
 	    
 	    final ArrayList<Object> data = empList();
 	    final DefaultTableModel model = new DefaultTableModel();
-	    model.setColumnIdentifiers(new Object[] {"Employee Number", "Last Name", "First Name"});
-	    for (int i = 0; i < data.size(); i += 3) {
-	        model.addRow(new Object[] {data.get(i), data.get(i+1), data.get(i+2)});
+	    model.setColumnIdentifiers(new Object[] {"Employee Number", "Last Name", "First Name", "SSS", "TIN", "Pag-Ibig","HDMF"});
+	    for (int i = 0; i < data.size(); i += 7) {
+	        model.addRow(new Object[] {data.get(i), data.get(i+1), data.get(i+2), data.get(i+3), data.get(i+4), data.get(i+5), data.get(i+6)});
 	    }
 	    final JTable tblEmployeeDetails = new JTable(model) {
 	        /**
@@ -340,6 +340,10 @@ public class JpEmpList extends JFrame {
 	    		        final String empNumber = tblEmployeeDetails.getValueAt(selectedRow, 0).toString();
 	    		        final String lastName = tblEmployeeDetails.getValueAt(selectedRow, 1).toString();
 	    		        final String firstName = tblEmployeeDetails.getValueAt(selectedRow, 2).toString();
+	    		        final String SSS = tblEmployeeDetails.getValueAt(selectedRow, 3).toString();
+		                final String TIN = tblEmployeeDetails.getValueAt(selectedRow, 4).toString();
+		                final String Pagibig = tblEmployeeDetails.getValueAt(selectedRow, 5).toString();
+		                final String PhilHealth = tblEmployeeDetails.getValueAt(selectedRow, 6).toString();
 	    		        lblempID.setText(empNumber);
 	    		        final String empname = (firstName+" "+lastName);
 	    		        lblempName.setText(empname);
@@ -378,6 +382,10 @@ public class JpEmpList extends JFrame {
 	                final String empNumber = tblEmployeeDetails.getValueAt(row, 0).toString();
 	                final String lastName = tblEmployeeDetails.getValueAt(row, 1).toString();
 	                final String firstName = tblEmployeeDetails.getValueAt(row, 2).toString();
+	                final String SSS = tblEmployeeDetails.getValueAt(row, 3).toString();
+	                final String TIN = tblEmployeeDetails.getValueAt(row, 4).toString();
+	                final String Pagibig = tblEmployeeDetails.getValueAt(row, 5).toString();
+	                final String PhilHealth = tblEmployeeDetails.getValueAt(row, 6).toString();
 	                // ...
 	            }
 	        }
@@ -396,6 +404,10 @@ public class JpEmpList extends JFrame {
 			newObj.add(ed.getEmpid());
 			newObj.add(ed.getEmpLname());
 			newObj.add(ed.getEmpFName());
+			newObj.add(ed.getEmpSSS());
+			newObj.add(ed.getEmpTIN());
+			newObj.add(ed.getEmpPagibig());
+			newObj.add(ed.getEmpPhilhealth());
 		});
 		//System.out.println(newObj.size());
 		return newObj;
