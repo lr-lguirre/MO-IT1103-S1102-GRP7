@@ -1,4 +1,4 @@
-package moit103s1102g7.payrollsystem;
+package m0it103s1102g7.payrollsystem;
 
 public class CalculateSSS {
     public static double SSS(double weeklyPay) {

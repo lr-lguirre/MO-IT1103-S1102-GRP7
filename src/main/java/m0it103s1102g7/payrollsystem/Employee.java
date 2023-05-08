@@ -1,4 +1,4 @@
-package moit103s1102g7.payrollsystem;
+package m0it103s1102g7.payrollsystem;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,6 +18,10 @@ import javax.swing.JTextField;
 public class Employee extends JFrame {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel lblPersonalInfo,lblSalaryInfo, lblEmployeeNo, lblLastName, 
 	lblFirstName, lblBirthday, lblAddress, lblPhoneNo, lblSssNo, lblPhic, lblTinNo,
 	lblHdmfNo;

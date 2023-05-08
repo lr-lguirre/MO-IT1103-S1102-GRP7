@@ -1,4 +1,5 @@
-package moit103s1102g7.payrollsystem;
+package m0it103s1102g7.payrollsystem;
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,31 +13,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class PayrollSystem extends JFrame {
 
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private Employee employee;
 	private HoursWorked hoursWorked;
 	private PrintNReadTxt printNRead;
 	private Payslip payslip;
 	// private variables for the Swing components
-	private JPanel mainPanel;
-	private JPanel profilePanel;
-	private JLabel lblMainMenu;
-	private JLabel lblProfileMenu;
-	private JButton btnEmployeeProfile;
-	private JButton btnEmployeeMaster;
-	private JButton btnLogout;
-	private JButton btnPersonalInfo;
-	private JButton btnSalaryInfo;
-	private JButton btnDailyTimesheet;
-	private JButton btnPayslip;
-	private JButton btnBack;
+	private JPanel mainPanel, profilePanel;
+	private JLabel lblMainMenu, lblProfileMenu;
+	private JButton btnEmployeeProfile, btnEmployeeMaster, btnLogout, btnPersonalInfo, btnSalaryInfo, btnDailyTimesheet, btnPayslip, btnBack;
 	Font font = new Font("Nexa Book", Font.BOLD, 15);
 	
 	
@@ -213,8 +202,7 @@ public class PayrollSystem extends JFrame {
 	
 	public static void main(String[] args) {
 		PayrollSystem payroll = new PayrollSystem();
-		// payroll.callMainMenu();
-		payroll.mainMenu();
+		payroll.callMainMenu();
 	}
 	
 	public void callMainMenu() {
