@@ -14,7 +14,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;

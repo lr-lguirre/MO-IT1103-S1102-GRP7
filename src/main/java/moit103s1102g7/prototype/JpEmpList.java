@@ -1,14 +1,12 @@
 package moit103s1102g7.prototype;
 
 import java.awt.EventQueue;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -34,7 +32,7 @@ public class JpEmpList extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
+	// private JTable tblEmployeeDetails;
 	private JTextField txtBirthday;
 	private JTextField txtAddress;
 	private JTextField txtPhone;
