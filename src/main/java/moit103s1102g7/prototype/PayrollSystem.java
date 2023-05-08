@@ -1,5 +1,4 @@
-package m0it103s1102g7.payrollsystem;
-import java.awt.BorderLayout;
+package moit103s1102g7.prototype;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,19 +12,33 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+
+import m0it103s1102g7.payrollsystem.PrintNReadTxt;
 
 public class PayrollSystem extends JFrame {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Employee employee;
 	private HoursWorked hoursWorked;
 	private PrintNReadTxt printNRead;
 	private Payslip payslip;
 	// private variables for the Swing components
-	private JPanel mainPanel, profilePanel;
-	private JLabel lblMainMenu, lblProfileMenu;
-	private JButton btnEmployeeProfile, btnEmployeeMaster, btnLogout, btnPersonalInfo, btnSalaryInfo, btnDailyTimesheet, btnPayslip, btnBack;
+	private JPanel mainPanel;
+	private JPanel profilePanel;
+	private JLabel lblMainMenu;
+	private JLabel lblProfileMenu;
+	private JButton btnEmployeeProfile;
+	private JButton btnEmployeeMaster;
+	private JButton btnLogout;
+	private JButton btnPersonalInfo;
+	private JButton btnSalaryInfo;
+	private JButton btnDailyTimesheet;
+	private JButton btnPayslip;
+	private JButton btnBack;
 	Font font = new Font("Nexa Book", Font.BOLD, 15);
 	
 	
@@ -200,18 +213,19 @@ public class PayrollSystem extends JFrame {
 		
 	}
 	
-	public static void main(String[] args) {
-		PayrollSystem payroll = new PayrollSystem();
-		payroll.callMainMenu();
-	}
+	/*
+	 * public static void main(String[] args) { PayrollSystem payroll = new
+	 * PayrollSystem(); payroll.callMainMenu(); }
+	 */
 	
-	public void callMainMenu() {
-		
-		UserLogin userLogin = new UserLogin();
-		userLogin.setVisible(true);
-		
-		
-	}
+	/*
+	 * public void callMainMenu() {
+	 * 
+	 * UserLogin userLogin = new UserLogin(); userLogin.setVisible(true);
+	 * 
+	 * 
+	 * }
+	 */
     
     public void mainMenu() {
     	profilePanel.setVisible(false);

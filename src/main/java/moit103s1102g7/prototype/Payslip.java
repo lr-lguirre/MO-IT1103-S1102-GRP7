@@ -1,4 +1,4 @@
-package m0it103s1102g7.payrollsystem;
+package moit103s1102g7.prototype;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -13,31 +13,60 @@ import java.io.PrintWriter;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
+import m0it103s1102g7.payrollsystem.PrintNReadTxt;
+
 import java.awt.Color;
 import javax.swing.JTextField;
-import javax.swing.JScrollPane;
 
 public class Payslip extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	protected JTextField txtEmployeeName, txtPayrollPeriod, txtPayDate, txtEmployeeNo, txtTIN, txtPhicNo, txtHdmfNo,
-	txtSssNo, txtPosition, txtHourlyRate,txtOvertimeRate, txtBasicPay, txtRiceSubsidy, txtPhoneSubsidy,
-	txtClothingAllowance, txtTotalNonTaxable, txtTotalTaxable, txtSss, txtPagibig, txtPhilhealth, txtWithholdingTax,
-	txtTotalDeductions, txtNetEarnings, txtGrossEarnings, txtBasicPayHrs;
+	protected JTextField txtEmployeeName;
+	protected JTextField txtPayrollPeriod;
+	protected JTextField txtPayDate;
+	protected JTextField txtEmployeeNo;
+	protected JTextField txtTIN;
+	protected JTextField txtPhicNo;
+	protected JTextField txtHdmfNo;
+	protected JTextField txtSssNo;
+	protected JTextField txtPosition;
+	protected JTextField txtHourlyRate;
+	protected JTextField txtOvertimeRate;
+	protected JTextField txtBasicPay;
+	protected JTextField txtRiceSubsidy;
+	protected JTextField txtPhoneSubsidy;
+	protected JTextField txtClothingAllowance;
+	protected JTextField txtTotalNonTaxable;
+	protected JTextField txtTotalTaxable;
+	protected JTextField txtSss;
+	protected JTextField txtPagibig;
+	protected JTextField txtPhilhealth;
+	protected JTextField txtWithholdingTax;
+	protected JTextField txtTotalDeductions;
+	protected JTextField txtNetEarnings;
+	protected JTextField txtGrossEarnings;
+	protected JTextField txtBasicPayHrs;
 	
 	protected String[] payPeriod = {"======= Pay Period =======",
 								  "1st Week September 2022"}; // For JComboBox use
 	private HoursWorked hrsWkd;
 	
 	private PrintNReadTxt printRead;
-	protected double[] allEmpRate, weeklyPay;
-	protected double rice = 1500.0 / 4, phone = 1000.0 / 4, clothes = 1000.0 / 4;
+	protected double[] allEmpRate;
+	protected double[] weeklyPay;
+	protected double rice = 1500.0 / 4;
+	protected double phone = 1000.0 / 4;
+	protected double clothes = 1000.0 / 4;
 
 	/**
 	 * Launch the application.
@@ -57,14 +86,12 @@ public class Payslip extends JFrame {
 	
 	public void displayPayslip() {
 		 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Payslip frame = new Payslip();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		EventQueue.invokeLater(() -> {
+			try {
+				Payslip frame = new Payslip();
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
@@ -84,7 +111,8 @@ public class Payslip extends JFrame {
 		setTitle("MotorPH Payroll System");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
-    	    public void windowClosing(WindowEvent e) {
+    	    @Override
+			public void windowClosing(WindowEvent e) {
     	        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
     	        if (confirm == JOptionPane.YES_OPTION) {
     	            // Close the application
@@ -109,72 +137,76 @@ public class Payslip extends JFrame {
 		lblEnterPayPeriod.setBounds(66, 48, 104, 14);
 		contentPane.add(lblEnterPayPeriod);
 		
-		JComboBox<String> comboBoxPayPeriod = new JComboBox<String>(payPeriod);
-		comboBoxPayPeriod.setBounds(180, 44, 208, 22);
-		contentPane.add(comboBoxPayPeriod);
+		/*
+		 * JComboBox<String> comboBoxPayPeriod = new JComboBox<String>(payPeriod);
+		 * comboBoxPayPeriod.setBounds(180, 44, 208, 22);
+		 * contentPane.add(comboBoxPayPeriod);
+		 */
 		
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(398, 43, 93, 23);
 		btnSubmit.addActionListener(new ActionListener() {
-		
-			
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[0])) {
-					
-					JOptionPane.showMessageDialog(Payslip.this, "       Please select pay period.", "Invalid Input", JOptionPane.INFORMATION_MESSAGE, null);
-				}
+				// TODO Auto-generated method stub
 				
-				if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[1])) {
-					txtEmployeeName.setText("Jose Crisostomo");
-					txtPayrollPeriod.setText(payPeriod[1]);
-					txtEmployeeNo.setText("10001");
-					txtPayDate.setText("September 10, 2022");
-					
-					txtTIN.setText("317-674-022-000");
-					txtPhicNo.setText("38-218945314-5");
-					txtPosition.setText("HR Manager");
-					txtOvertimeRate.setText("PHP " + (Math.round((allEmpRate[0] * 1.5) * 100.0) / 100.0) + "");
-					txtSssNo.setText("49-1632020-8");
-					txtHdmfNo.setText("4410-9336-9646");
-					txtHourlyRate.setText("PHP " + allEmpRate[0] + "");
-					
-					txtBasicPayHrs.setText(hrsWkd.calculateWeeklyHoursWorked(1) + "");
-					txtBasicPay.setText("PHP " + (Math.round(weeklyPay[0] * 100.0) / 100.0) + "");
-					txtTotalTaxable.setText("PHP " + (Math.round(weeklyPay[0] * 100.0) / 100.0) + "");
-					
-					txtRiceSubsidy.setText("PHP " + (Math.round(rice * 100.0) / 100.0) + "");
-					txtPhoneSubsidy.setText("PHP " + (Math.round(phone * 100.0) / 100.0) + "");
-					txtClothingAllowance.setText("PHP " + (Math.round(clothes * 100.0) / 100.0) + "");
-					txtTotalNonTaxable.setText("PHP " + (Math.round((rice + phone + clothes) * 100.0) / 100.0));
-					txtGrossEarnings.setText("PHP " + (Math.round((weeklyPay[0] + (rice + phone + clothes)) * 100.0) / 100.0));
-					
-					double sss = CalculateSSS.SSS(weeklyPay[0]), pagibig = CalculatePagIbig.PagIbig(weeklyPay[0]), philhealth = CalculatePhilhealth.Philhealth(weeklyPay[0]),
-							withholding = CalculateWitholdingTax.WitholdingTax(weeklyPay[0],
-									   CalculatePhilhealth.Philhealth(weeklyPay[0]),
-									   CalculatePagIbig.PagIbig(weeklyPay[0]),
-									   CalculateSSS.SSS(weeklyPay[0]));
-					
-					
-					txtSss.setText("PHP " + (Math.round(CalculateSSS.SSS(weeklyPay[0])* 100.0) / 100.0));
-					txtPagibig.setText("PHP " + (Math.round(CalculatePagIbig.PagIbig(weeklyPay[0])* 100.0) / 100.0));
-					txtPhilhealth.setText("PHP " + (Math.round(CalculatePhilhealth.Philhealth(weeklyPay[0])* 100.0) / 100.0));
-					txtWithholdingTax.setText("PHP " + (Math.round(CalculateWitholdingTax.WitholdingTax(weeklyPay[0],
-							  									   CalculatePhilhealth.Philhealth(weeklyPay[0]),
-																   CalculatePagIbig.PagIbig(weeklyPay[0]),
-							  									   CalculateSSS.SSS(weeklyPay[0])) * 100.0) / 100.0));
-					
-					txtTotalDeductions.setText("PHP " + (Math.round(CalculateSSS.SSS(weeklyPay[0]) + CalculatePhilhealth.Philhealth(weeklyPay[0]) + 
-														 CalculatePagIbig.PagIbig(weeklyPay[0]) + CalculateWitholdingTax.WitholdingTax(weeklyPay[0],
-							  									   CalculatePhilhealth.Philhealth(weeklyPay[0]),
-																   CalculatePagIbig.PagIbig(weeklyPay[0]),
-							  									   CalculateSSS.SSS(weeklyPay[0]))) * 100.0) / 100.0);
-					txtNetEarnings.setText("PHP " + (Math.round(weeklyPay[0] + (rice + phone + clothes) - (sss + pagibig + philhealth + withholding)) * 100.0) / 100.0);
-				}
-			}
+			}			
+			/*
+			 * @Override public void actionPerformed(ActionEvent e) { if
+			 * (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[0])) {
+			 * 
+			 * JOptionPane.showMessageDialog(Payslip.this,
+			 * "       Please select pay period.", "Invalid Input",
+			 * JOptionPane.INFORMATION_MESSAGE, null); }
+			 * 
+			 * if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[1])) {
+			 * txtEmployeeName.setText("Jose Crisostomo");
+			 * txtPayrollPeriod.setText(payPeriod[1]); txtEmployeeNo.setText("10001");
+			 * txtPayDate.setText("September 10, 2022");
+			 * 
+			 * txtTIN.setText("317-674-022-000"); txtPhicNo.setText("38-218945314-5");
+			 * txtPosition.setText("HR Manager"); txtOvertimeRate.setText("PHP " +
+			 * (Math.round((allEmpRate[0] * 1.5) * 100.0) / 100.0) + "");
+			 * txtSssNo.setText("49-1632020-8"); txtHdmfNo.setText("4410-9336-9646");
+			 * txtHourlyRate.setText("PHP " + allEmpRate[0] + "");
+			 * 
+			 * txtBasicPayHrs.setText(hrsWkd.calculateWeeklyHoursWorked(1) + "");
+			 * txtBasicPay.setText("PHP " + (Math.round(weeklyPay[0] * 100.0) / 100.0) +
+			 * ""); txtTotalTaxable.setText("PHP " + (Math.round(weeklyPay[0] * 100.0) /
+			 * 100.0) + "");
+			 * 
+			 * txtRiceSubsidy.setText("PHP " + (Math.round(rice * 100.0) / 100.0) + "");
+			 * txtPhoneSubsidy.setText("PHP " + (Math.round(phone * 100.0) / 100.0) + "");
+			 * txtClothingAllowance.setText("PHP " + (Math.round(clothes * 100.0) / 100.0) +
+			 * ""); txtTotalNonTaxable.setText("PHP " + (Math.round((rice + phone + clothes)
+			 * * 100.0) / 100.0)); txtGrossEarnings.setText("PHP " +
+			 * (Math.round((weeklyPay[0] + (rice + phone + clothes)) * 100.0) / 100.0));
+			 * 
+			 * helperPayrollCalculator helper = new helperPayrollCalculator();
+			 * 
+			 * double sss =
+			 * moit103s1102g7.prototype.helperPayrollCalculator.hlpSSS(weeklyPay[0]); double
+			 * pagibig =
+			 * moit103s1102g7.prototype.helperPayrollCalculator.hlpPagIbig(weeklyPay[0]);
+			 * double philhealth =
+			 * moit103s1102g7.prototype.helperPayrollCalculator.hlpPhilhealth(weeklyPay[0]);
+			 * double withholding =
+			 * moit103s1102g7.prototype.helperPayrollCalculator.hlpWitholdingTax(weeklyPay[0
+			 * ], withholding, withholding, withholding);
+			 * 
+			 * txtSss.setText("PHP " + (Math.round(sss)* 100.0) / 100.0));
+			 * txtPagibig.setText("PHP " + (Math.round(pagibig)* 100.0) / 100.0));
+			 * txtPhilhealth.setText("PHP " + (Math.round(philhealth)* 100.0) / 100.0));
+			 * txtWithholdingTax.setText("PHP " + (Math.round(withholding, philhealth,
+			 * pagibig, sss) * 100.0) / 100.0); txtTotalDeductions.setText("PHP " +
+			 * (Math.round(sss + philhealth + pagibig + withholding) * 100.0)/ 100.0);
+			 * txtNetEarnings.setText("PHP " + (Math.round(weeklyPay[0] + (rice + phone +
+			 * clothes) - (sss + pagibig + philhealth + withholding)) * 100.0) / 100.0); } }
+			 */
 		});
+		
 		contentPane.add(btnSubmit);
 		
 		JPanel payrollInformationPanel = new JPanel();
@@ -514,128 +546,124 @@ public class Payslip extends JFrame {
 		
 		JButton btnReset = new JButton("Reset");
 		btnReset.setBounds(373, 600, 73, 23);
-		btnReset.addActionListener(new ActionListener() {
+		btnReset.addActionListener((ActionEvent e) -> {
+			txtEmployeeName.setText("");
+			txtPayrollPeriod.setText("");
+			txtEmployeeNo.setText("");
+			txtPayDate.setText("");
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				txtEmployeeName.setText("");
-				txtPayrollPeriod.setText("");
-				txtEmployeeNo.setText("");
-				txtPayDate.setText("");
-				
-				txtTIN.setText("");
-				txtPhicNo.setText("");
-				txtPosition.setText("");
-				txtOvertimeRate.setText("");
-				txtSssNo.setText("");
-				txtHdmfNo.setText("");
-				txtHourlyRate.setText("");
-				
-				txtBasicPayHrs.setText("");
-				txtBasicPay.setText("");
-				txtTotalTaxable.setText("");
-				
-				txtRiceSubsidy.setText("");
-				txtPhoneSubsidy.setText("");
-				txtClothingAllowance.setText("");
-				txtTotalNonTaxable.setText("");
-				txtGrossEarnings.setText("");
+			txtTIN.setText("");
+			txtPhicNo.setText("");
+			txtPosition.setText("");
+			txtOvertimeRate.setText("");
+			txtSssNo.setText("");
+			txtHdmfNo.setText("");
+			txtHourlyRate.setText("");
+			
+			txtBasicPayHrs.setText("");
+			txtBasicPay.setText("");
+			txtTotalTaxable.setText("");
+			
+			txtRiceSubsidy.setText("");
+			txtPhoneSubsidy.setText("");
+			txtClothingAllowance.setText("");
+			txtTotalNonTaxable.setText("");
+			txtGrossEarnings.setText("");
 
-				txtSss.setText("");
-				txtPagibig.setText("");
-				txtPhilhealth.setText("");
-				txtWithholdingTax.setText("");
-				
-				txtTotalDeductions.setText("");
-				txtNetEarnings.setText("");
-				
-			}
+			txtSss.setText("");
+			txtPagibig.setText("");
+			txtPhilhealth.setText("");
+			txtWithholdingTax.setText("");
+			
+			txtTotalDeductions.setText("");
+			txtNetEarnings.setText("");
+			
 		});
 		contentPane.add(btnReset);
 		
 		JButton btnBack = new JButton("Exit");
 		btnBack.setBounds(456, 600, 64, 23);
-		btnBack.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				dispose();
-				PayrollSystem payroll = new PayrollSystem();
-				payroll.profileMenu();
-			}
+		btnBack.addActionListener((ActionEvent e1) -> {
+			setVisible(false);
+			dispose();
+			PayrollSystem payroll = new PayrollSystem();
+			payroll.profileMenu();
 		});
 		contentPane.add(btnBack);
 		
 		JButton btnPrint = new JButton("Print");
 		btnPrint.setBounds(289, 600, 73, 23);
 		btnPrint.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				
-				if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[1]) && !txtEmployeeName.getText().equals("")) {
-					
-					// I really didn't want to do it like this TTTT ^ TTTT
-					
-					try {
-					PrintWriter slipWriter = new PrintWriter("Payslip_Out.txt");
-					
-					slipWriter.println("--------- MotorPH ---------");
-					slipWriter.println("PAYROLL INFORMATION");
-					slipWriter.println("Employee Name: " + txtEmployeeName.getText());
-					slipWriter.println("Payroll Period: " + txtPayrollPeriod.getText());
-					slipWriter.println("Pay Date: " + txtPayDate.getText());
-					slipWriter.println(" ");
-					slipWriter.println("EMPLOYEE INFORMATION");
-					slipWriter.println("Employee No.: " + txtEmployeeNo.getText());
-				 	slipWriter.println("TIN: " + txtTIN.getText());
-				 	slipWriter.println("SSS No.: " + txtSssNo.getText());
-				 	slipWriter.println("PHIC No.: " + txtPhicNo.getText());
-				 	slipWriter.println("HDMF No.: " + txtHdmfNo.getText());
-				 	slipWriter.println("Position: " + txtPosition.getText());
-				 	slipWriter.println("Hourly Rate: PHP " + txtHourlyRate.getText());
-				 	slipWriter.println("Overtime Rate: PHP " + txtOvertimeRate.getText());
-				 	slipWriter.println("\nEARNINGS");
-				 	slipWriter.println("Taxable Earnings:");
-				 	slipWriter.println("\nBasic Pay - " + txtBasicPayHrs.getText() + " hr(s): PHP " + txtBasicPay.getText());
-				 	slipWriter.println("\nTOTAL TAXABLE PAY: PHP " + txtTotalTaxable.getText());
-				 		 	
-				 	slipWriter.println("\nNon-Taxable Earnings:");
-				 	slipWriter.println("Rice Subsidy: PHP " + txtRiceSubsidy.getText());
-				 	slipWriter.println("Clothing Allowance: PHP " + txtClothingAllowance.getText());
-				 	slipWriter.println("Phone Allowance: PHP " + txtPhoneSubsidy.getText());
-				 	slipWriter.println("TOTAL NON-TAXABLE PAY: PHP " + txtTotalNonTaxable.getText());
-				 	slipWriter.println("\nGROSS EARNINGS: PHP " + txtGrossEarnings.getText());
-				 	
-				 	slipWriter.println("\nDEDUCTIONS:");
-				 	slipWriter.println("SSS: PHP " + txtSss.getText());
-				 	slipWriter.println("PhilHealth: PHP " + txtPhilhealth.getText());
-				 	slipWriter.println("Pag-ibig: PHP " + txtPagibig.getText());
-				 	slipWriter.println("Withholding Tax: PHP " + txtWithholdingTax.getText());
-				 	slipWriter.println("TOTAL DEDUCTIONS: PHP " + txtTotalDeductions.getText());
-				 	slipWriter.println("\nNET EARNINGS: PHP " + txtNetEarnings.getText());
-        
-				    slipWriter.close();
-				      } catch (IOException f) {
-				        System.out.println("An error occurred.");
-				        f.printStackTrace();
-				      }	
-
-					JOptionPane.showMessageDialog(Payslip.this, "Printed to Payslip_Out.txt file.", "Success!", JOptionPane.INFORMATION_MESSAGE, null);
-				try {
-					Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "Payslip_Out.txt");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-					}
-				} else {
-					JOptionPane.showMessageDialog(Payslip.this, "  Please select pay period first.", "An error occured.", JOptionPane.INFORMATION_MESSAGE, null);
-				}
 			}
+			
+			/*
+			 * @Override public void actionPerformed(ActionEvent e) {
+			 * 
+			 * if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[1]) &&
+			 * !"".equals(txtEmployeeName.getText())) {
+			 * 
+			 * // I really didn't want to do it like this TTTT ^ TTTT
+			 * 
+			 * try (PrintWriter slipWriter = new PrintWriter("Payslip_Out.txt")) {
+			 * slipWriter.println("--------- MotorPH ---------");
+			 * slipWriter.println("PAYROLL INFORMATION");
+			 * slipWriter.println("Employee Name: " + txtEmployeeName.getText());
+			 * slipWriter.println("Payroll Period: " + txtPayrollPeriod.getText());
+			 * slipWriter.println("Pay Date: " + txtPayDate.getText());
+			 * slipWriter.println(" "); slipWriter.println("EMPLOYEE INFORMATION");
+			 * slipWriter.println("Employee No.: " + txtEmployeeNo.getText());
+			 * slipWriter.println("TIN: " + txtTIN.getText());
+			 * slipWriter.println("SSS No.: " + txtSssNo.getText());
+			 * slipWriter.println("PHIC No.: " + txtPhicNo.getText());
+			 * slipWriter.println("HDMF No.: " + txtHdmfNo.getText());
+			 * slipWriter.println("Position: " + txtPosition.getText());
+			 * slipWriter.println("Hourly Rate: PHP " + txtHourlyRate.getText());
+			 * slipWriter.println("Overtime Rate: PHP " + txtOvertimeRate.getText());
+			 * slipWriter.println("\nEARNINGS"); slipWriter.println("Taxable Earnings:");
+			 * slipWriter.println("\nBasic Pay - " + txtBasicPayHrs.getText() +
+			 * " hr(s): PHP " + txtBasicPay.getText());
+			 * slipWriter.println("\nTOTAL TAXABLE PAY: PHP " + txtTotalTaxable.getText());
+			 * 
+			 * slipWriter.println("\nNon-Taxable Earnings:");
+			 * slipWriter.println("Rice Subsidy: PHP " + txtRiceSubsidy.getText());
+			 * slipWriter.println("Clothing Allowance: PHP " +
+			 * txtClothingAllowance.getText()); slipWriter.println("Phone Allowance: PHP " +
+			 * txtPhoneSubsidy.getText()); slipWriter.println("TOTAL NON-TAXABLE PAY: PHP "
+			 * + txtTotalNonTaxable.getText()); slipWriter.println("\nGROSS EARNINGS: PHP "
+			 * + txtGrossEarnings.getText());
+			 * 
+			 * slipWriter.println("\nDEDUCTIONS:"); slipWriter.println("SSS: PHP " +
+			 * txtSss.getText()); slipWriter.println("PhilHealth: PHP " +
+			 * txtPhilhealth.getText()); slipWriter.println("Pag-ibig: PHP " +
+			 * txtPagibig.getText()); slipWriter.println("Withholding Tax: PHP " +
+			 * txtWithholdingTax.getText()); slipWriter.println("TOTAL DEDUCTIONS: PHP " +
+			 * txtTotalDeductions.getText()); slipWriter.println("\nNET EARNINGS: PHP " +
+			 * txtNetEarnings.getText()); } catch (IOException f) {
+			 * System.out.println("An error occurred."); f.printStackTrace(); }
+			 * 
+			 * JOptionPane.showMessageDialog(Payslip.this,
+			 * "Printed to Payslip_Out.txt file.", "Success!",
+			 * JOptionPane.INFORMATION_MESSAGE, null); String exec =
+			 * "rundll32 url.dll,FileProtocolHandler " + "Payslip_Out.txt"; } else {
+			 * JOptionPane.showMessageDialog(Payslip.this,
+			 * "  Please select pay period first.", "An error occured.",
+			 * JOptionPane.INFORMATION_MESSAGE, null); } }
+			 */
 		});
 		contentPane.add(btnPrint);
 		
 		setLocationRelativeTo(null);
+		
+	}
+
+
+	protected void helperPayrollCalculator() {
+		// TODO Auto-generated method stub
 		
 	}
 }

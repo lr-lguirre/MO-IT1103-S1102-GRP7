@@ -20,6 +20,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import moit103s1102g7.prototype.PayrollSystem;
+
 public class UserLogin extends JFrame implements ActionListener{
     private String empNo = "10001";
     private String pass = "Admin1234";

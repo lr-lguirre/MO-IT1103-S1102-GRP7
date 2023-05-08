@@ -12,6 +12,14 @@ import java.text.DecimalFormat;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+
+import moit103s1102g7.prototype.CalculatePagIbig;
+import moit103s1102g7.prototype.CalculatePhilhealth;
+import moit103s1102g7.prototype.CalculateSSS;
+import moit103s1102g7.prototype.CalculateWitholdingTax;
+import moit103s1102g7.prototype.Employee;
+import moit103s1102g7.prototype.HoursWorked;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.ImageIcon;

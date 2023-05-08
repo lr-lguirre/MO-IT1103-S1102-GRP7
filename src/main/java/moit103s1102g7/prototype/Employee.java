@@ -1,4 +1,4 @@
-package m0it103s1102g7.payrollsystem;
+package moit103s1102g7.prototype;
 
 import java.awt.Color;
 import java.awt.Font;

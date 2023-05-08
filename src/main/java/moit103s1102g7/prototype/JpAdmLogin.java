@@ -19,6 +19,9 @@ import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class JpAdmLogin extends JFrame {
 
@@ -148,5 +151,18 @@ public class JpAdmLogin extends JFrame {
 		btnExit.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnExit.setBounds(250, 182, 89, 23);
 		contentPane.add(btnExit);
+		
+		JLabel lblEmpLogin = new JLabel("Employee Login");
+		lblEmpLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JpEmpLogin.empLogin(null);
+			}
+		});
+		lblEmpLogin.setForeground(Color.RED);
+		lblEmpLogin.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmpLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblEmpLogin.setBounds(155, 224, 148, 26);
+		contentPane.add(lblEmpLogin);
 	}
 }
