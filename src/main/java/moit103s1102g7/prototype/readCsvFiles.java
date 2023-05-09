@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 
+import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 public class readCsvFiles {
@@ -44,6 +45,15 @@ public class readCsvFiles {
 			return csvBeanReader;	
 	}
 	
+	public static employeeLogin searchEmployeeByUsername(String username) throws FileNotFoundException{
+	    CsvToBean<employeeLogin> csvToBean = new CsvToBeanBuilder<employeeLogin>(new FileReader("employeeLogin.csv"))
+	            .withType(employeeLogin.class)
+	            .withIgnoreLeadingWhiteSpace(true)
+	            .build();
+	    employeeLogin searchUser = csvToBean.parse().stream().filter(u -> u.getEmpid().equals(username)).findFirst().orElse(null);
+	    return searchUser;
+	}
+	
 	public static List<employeeAttendance> employeeAttendance () {
 		String f = "attendance.csv";
 		FileReader reader = null;
@@ -79,6 +89,16 @@ public class readCsvFiles {
 					.parse();
 			return csvBeanReader;	
 	}
+	
+	public static adminUsers searchAdminUserByUsername(String username) throws FileNotFoundException{
+        CsvToBean<adminUsers> csvToBean = new CsvToBeanBuilder<adminUsers>(new FileReader("adminusers.csv"))
+                .withType(adminUsers.class)
+                .withIgnoreLeadingWhiteSpace(true)
+                .build();
+        adminUsers searchUser = csvToBean.parse().stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
+        return searchUser;
+    }
+	
 	
 	public static List<employeeLeaves> employeeLeaves () {
 		String f = "users.csv";

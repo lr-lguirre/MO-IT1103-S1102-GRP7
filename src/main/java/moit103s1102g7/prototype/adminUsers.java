@@ -42,5 +42,4 @@ public class adminUsers {
 		return "adminUsers [username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
 	
-	
 }
