@@ -51,7 +51,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 
-public class LeaveApplication extends JFrame {
+public class JpLeaveApplication extends JFrame {
 
 	String path = "leaves.csv";
 	String line = "";
@@ -83,8 +83,8 @@ public class LeaveApplication extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LeaveApplication frame = new LeaveApplication();
-					frame.readCsvFiles();
+					JpLeaveApplication frame = new JpLeaveApplication();
+					// frame.readCsvFiles();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -142,7 +142,7 @@ public class LeaveApplication extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LeaveApplication() {
+	public JpLeaveApplication() {
 
 		setTitle("MotorPH Employee Leave");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -164,7 +164,7 @@ public class LeaveApplication extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 	        	dispose();
-	        	PayrollSystem menu = new PayrollSystem();
+	        	JpPayrollSystem menu = new JpPayrollSystem();
 	        	menu.profileMenu();
 				
 			}
@@ -233,7 +233,7 @@ public class LeaveApplication extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clearFields();
+				// clearFields();
 				
 			}
 		});
@@ -333,10 +333,10 @@ public class LeaveApplication extends JFrame {
 				}
 				
 
-				LeavePageRedirector redirector = new LeavePageRedirector();
-				redirector.redirect();
-				setVisible(false);
-				dispose();
+				// LeavePageRedirector redirector = new LeavePageRedirector();
+				// redirector.redirect();
+				// setVisible(false);
+				// dispose();
 				}
 			}
 		});

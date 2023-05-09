@@ -14,8 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JTabbedPane;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 
-public class Employee extends JFrame {
+public class JpEmployee extends JFrame {
 	
 	
 	/**
@@ -34,10 +38,10 @@ public class Employee extends JFrame {
 	private JTextField txtSalEmployeeNo, txtEmployeeStats, txtEmployeePosition, txtSalaryClass,
 	txtBasicSalary, txtRiceSubsidy, txtPhoneAllowance, txtClothingAllowance;
 	
-	private JButton btnBack, btnSalaryBack;
+	private JButton btnLogout, btnSalaryBack;
 	private JPanel personalInfoPanel, salaryInfoPanel;
 	
-	public Employee() {
+	public JpEmployee() {
 		// Swing components
 		// Initialize panel for personal information
 		personalInfoPanel = new JPanel();
@@ -58,58 +62,56 @@ public class Employee extends JFrame {
 		lblHdmfNo = new JLabel("Pag-ibig No.:");
 		
 		txtEmployeeNo = new JTextField(20);
+		txtEmployeeNo.setEditable(false);
 		txtEmployeeNo.setEnabled(false);
 		txtEmployeeNo.setDisabledTextColor(new Color(128, 128, 128));
-		txtEmployeeNo.setText("10001");
 		
 		txtLastName = new JTextField(20);
+		txtLastName.setEditable(false);
 		txtLastName.setEnabled(false);
 		txtLastName.setDisabledTextColor(new Color(128, 128, 128));
-		txtLastName.setText("Crisostomo");
 		
 		txtFirstName = new JTextField(20);
+		txtFirstName.setEditable(false);
 		txtFirstName.setEnabled(false);
 		txtFirstName.setDisabledTextColor(new Color(128, 128, 128));
-		txtFirstName.setText("Jose");
 		
 		txtBirthday = new JTextField(20);
+		txtBirthday.setEditable(false);
 		txtBirthday.setEnabled(false);
 		txtBirthday.setDisabledTextColor(new Color(128, 128, 128));
-		txtBirthday.setText("February 14, 1988");
 		
 		txtAddress = new JTextField(20);
 		txtAddress.setEnabled(false);
 		txtAddress.setDisabledTextColor(new Color(128, 128, 128));
-		txtAddress.setText("17/85 Stracke Via");
 		
 		txtPhoneNo = new JTextField(20);
 		txtPhoneNo.setEnabled(false);
 		txtPhoneNo.setDisabledTextColor(new Color(128, 128, 128));
-		txtPhoneNo.setText("918-621-603");
 		
 		txtSssNo = new JTextField(20);
+		txtSssNo.setEditable(false);
 		txtSssNo.setEnabled(false);
 		txtSssNo.setDisabledTextColor(new Color(128, 128, 128));
-		txtSssNo.setText("49-1632020-8");
 		
 		txtPhic = new JTextField(20);
+		txtPhic.setEditable(false);
 		txtPhic.setEnabled(false);
 		txtPhic.setDisabledTextColor(new Color(128, 128, 128));
-		txtPhic.setText("38-218945314-5");
 		
 		txtTinNo = new JTextField(20);
+		txtTinNo.setEditable(false);
 		txtTinNo.setEnabled(false);
 		txtTinNo.setDisabledTextColor(new Color(128, 128, 128));
-		txtTinNo.setText("317-674-022-000");
 		
 		txtHdmfNo = new JTextField(20);
+		txtHdmfNo.setEditable(false);
 		txtHdmfNo.setEnabled(false);
 		txtHdmfNo.setDisabledTextColor(new Color(128, 128, 128));
-		txtHdmfNo.setText("4410-9336-9646");
 		
-		btnBack = new JButton("Back");
-		btnBack.setBounds(265, 260, 80, 30);
-		btnBack.addActionListener(new ActionListener() {
+		btnLogout = new JButton("Logout");
+		btnLogout.setBounds(490, 270, 80, 30);
+		btnLogout.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -162,7 +164,7 @@ public class Employee extends JFrame {
 		personalInfoPanel.add(txtTinNo);
 		personalInfoPanel.add(lblHdmfNo);
 		personalInfoPanel.add(txtHdmfNo);
-		personalInfoPanel.add(btnBack);
+		personalInfoPanel.add(btnLogout);
 		
 		// Initialize panel for salary info
 		salaryInfoPanel = new JPanel();
@@ -273,6 +275,39 @@ public class Employee extends JFrame {
 		// Add main panel to the frame
 		getContentPane().add(personalInfoPanel);
 		
+		JButton btnPayslip = new JButton("Payslip");
+		btnPayslip.setBounds(481, 139, 89, 23);
+		personalInfoPanel.add(btnPayslip);
+		
+		JButton btnAttendance = new JButton("Attendance");
+		btnAttendance.setBounds(481, 169, 89, 23);
+		personalInfoPanel.add(btnAttendance);
+		
+		JButton btnNewButton = new JButton("Leaves");
+		btnNewButton.setBounds(481, 200, 89, 21);
+		personalInfoPanel.add(btnNewButton);
+		
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBounds(150, 270, 89, 30);
+		personalInfoPanel.add(btnUpdate);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setToolTipText("View");
+		menuBar.setBounds(0, 0, 37, 22);
+		personalInfoPanel.add(menuBar);
+		
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+		
+		JMenuItem mntmPayslip = new JMenuItem("Payslip");
+		mnView.add(mntmPayslip);
+		
+		JMenuItem mntmAttendance = new JMenuItem("Attendance");
+		mnView.add(mntmAttendance);
+		
+		JMenuItem mntmLeaves = new JMenuItem("Leaves");
+		mnView.add(mntmLeaves);
+		
 		// Set-up the frame
 		setTitle("Employee Info Menu");
 		setSize(630,350);
@@ -338,10 +373,8 @@ public class Employee extends JFrame {
 		// Hide Employee Info Window
 		setVisible(false);
 		dispose();
-		PayrollSystem payroll = new PayrollSystem();
+		JpPayrollSystem payroll = new JpPayrollSystem();
 		payroll.profileMenu();
 		
 	}
-		
-	
 }

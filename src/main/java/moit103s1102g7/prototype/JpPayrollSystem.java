@@ -13,17 +13,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class PayrollSystem extends JFrame {
+public class JpPayrollSystem extends JFrame {
 
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Employee employee;
+	private JpEmployee jpEmployee;
 	private HoursWorked hoursWorked;
 	private PrintNReadTxt printNRead;
-	private Payslip payslip;
+	private JpPayslip jpPayslip;
 	// private variables for the Swing components
 	private JPanel mainPanel;
 	private JPanel profilePanel;
@@ -42,13 +42,13 @@ public class PayrollSystem extends JFrame {
 	
 	Scanner scan = new Scanner(System.in);
 	
-	public PayrollSystem() { // Constructor
+	public JpPayrollSystem() { // Constructor
 		
 		// Initialize objects
-		employee = new Employee();
+		jpEmployee = new JpEmployee();
 		hoursWorked = new HoursWorked();
 		printNRead = new PrintNReadTxt();
-		payslip = new Payslip();
+		jpPayslip = new JpPayslip();
 		
 		// Swing components
 		// Initialize main panel
@@ -80,7 +80,7 @@ public class PayrollSystem extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(PayrollSystem.this, "This option is not yet available.", "Sorry!", JOptionPane.INFORMATION_MESSAGE, null);
+				JOptionPane.showMessageDialog(JpPayrollSystem.this, "This option is not yet available.", "Sorry!", JOptionPane.INFORMATION_MESSAGE, null);
 				
 			}
 		});
@@ -130,7 +130,7 @@ public class PayrollSystem extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				dispose();
-				employee.printPersonalInfo();
+				jpEmployee.printPersonalInfo();
 				
 			}
 		});
@@ -141,7 +141,7 @@ public class PayrollSystem extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				dispose();
-				employee.printSalaryRecords();
+				jpEmployee.printSalaryRecords();
 				
 			}
 		});
@@ -163,7 +163,7 @@ public class PayrollSystem extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				dispose();
-				payslip.displayPayslip();
+				jpPayslip.displayPayslip();
 				
 			}
 		});

@@ -22,7 +22,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JTextField;
 
-public class Payslip extends JFrame {
+public class JpPayslip extends JFrame {
 
 	/**
 	 * 
@@ -86,7 +86,7 @@ public class Payslip extends JFrame {
 		 
 		EventQueue.invokeLater(() -> {
 			try {
-				Payslip frame = new Payslip();
+				JpPayslip frame = new JpPayslip();
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -98,7 +98,7 @@ public class Payslip extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Payslip() {
+	public JpPayslip() {
 		hrsWkd = new HoursWorked();
 		printRead = new PrintNReadTxt();
 		printRead.printRead();
@@ -584,7 +584,7 @@ public class Payslip extends JFrame {
 		btnBack.addActionListener((ActionEvent e1) -> {
 			setVisible(false);
 			dispose();
-			PayrollSystem payroll = new PayrollSystem();
+			JpPayrollSystem payroll = new JpPayrollSystem();
 			payroll.profileMenu();
 		});
 		contentPane.add(btnBack);

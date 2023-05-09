@@ -377,7 +377,7 @@ public class HoursWorked extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				dispose();
-				PayrollSystem payroll = new PayrollSystem();
+				JpPayrollSystem payroll = new JpPayrollSystem();
 				payroll.profileMenu();
 				
 			}
