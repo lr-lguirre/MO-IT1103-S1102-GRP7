@@ -1,29 +1,28 @@
-package moit103s1102g7.prototype;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+package moit103s1102g7.motorph;
+
 import java.util.Scanner;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.AbstractButton.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class JpPayrollSystem extends JFrame {
-
-	
-	/**
+public class Payroll extends JFrame {
+    /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JpEmployee jpEmployee;
+	private Employee employee;
 	private HoursWorked hoursWorked;
 	private PrintNReadTxt printNRead;
-	private JpPayslip jpPayslip;
+	private Payslip payslip;
 	// private variables for the Swing components
 	private JPanel mainPanel;
 	private JPanel profilePanel;
@@ -42,13 +41,13 @@ public class JpPayrollSystem extends JFrame {
 	
 	Scanner scan = new Scanner(System.in);
 	
-	public JpPayrollSystem() { // Constructor
+	public void PayrollSystem() { // Constructor
 		
 		// Initialize objects
-		jpEmployee = new JpEmployee();
+		employee = new Employee();
 		hoursWorked = new HoursWorked();
 		printNRead = new PrintNReadTxt();
-		jpPayslip = new JpPayslip();
+		payslip = new Payslip();
 		
 		// Swing components
 		// Initialize main panel
@@ -63,9 +62,11 @@ public class JpPayrollSystem extends JFrame {
 		
 		btnEmployeeProfile = new JButton("My Employee Profile");
 		btnEmployeeProfile.setBounds(150, 55, 150, 30);
-		btnEmployeeProfile.addActionListener((ActionEvent e) -> {
-			profileMenu();
-			
+		btnEmployeeProfile.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				profileMenu();
+			}
 		});
 		
 		mainPanel.add(btnEmployeeProfile);
@@ -76,7 +77,7 @@ public class JpPayrollSystem extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(JpPayrollSystem.this, "This option is not yet available.", "Sorry!", JOptionPane.INFORMATION_MESSAGE, null);
+				JOptionPane.showMessageDialog(PayrollSystem.this, "This option is not yet available.", "Sorry!", JOptionPane.INFORMATION_MESSAGE, null);
 				
 			}
 		});
@@ -92,11 +93,6 @@ public class JpPayrollSystem extends JFrame {
 				setVisible(false);
 	        	dispose();
 				callMainMenu();
-				
-			}
-
-			private void callMainMenu() {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -125,37 +121,62 @@ public class JpPayrollSystem extends JFrame {
 		btnPayslip.setBounds(245, 95, 155, 30);
 		btnBack.setBounds(170, 135, 100, 30);
 		
-		btnPersonalInfo.addActionListener((ActionEvent e) -> {
-			setVisible(false);
-			dispose();
-			jpEmployee.printPersonalInfo();
+		btnPersonalInfo.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				dispose();
+				employee.printPersonalInfo();
+				
+			}
 		});
 		
-		btnSalaryInfo.addActionListener((ActionEvent e1) -> {
-			setVisible(false);
-			dispose();
-			jpEmployee.printSalaryRecords();
+		btnSalaryInfo.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				dispose();
+				employee.printSalaryRecords();
+				
+			}
 		});
 		
-		btnDailyTimesheet.addActionListener((ActionEvent e2) -> {
-			setVisible(false);
-			dispose();
-			hoursWorked.displayTimeSheet();
+		btnDailyTimesheet.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				dispose();
+				hoursWorked.displayTimeSheet();
+				
+			}
 		});
 		
-		btnPayslip.addActionListener((ActionEvent e3) -> {
-			setVisible(false);
-			dispose();
-			jpPayslip.displayPayslip();
+		btnPayslip.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				dispose();
+				payslip.displayPayslip();
+				
+			}
 		});
 		
-		btnBack.addActionListener((ActionEvent e4) -> {
-			mainMenu();
+		btnBack.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainMenu();
+				
+			}
+
+			private void mainMenu() {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 		
 		profilePanel.add(btnPersonalInfo);
@@ -173,8 +194,7 @@ public class JpPayrollSystem extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
-    	    @Override
-			public void windowClosing(WindowEvent e) {
+    	    public void windowClosing(WindowEvent e) {
     	        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
     	        if (confirm == JOptionPane.YES_OPTION) {
     	            // Close the application
@@ -192,45 +212,4 @@ public class JpPayrollSystem extends JFrame {
     	
 		
 	}
-	
-	/*
-	 * public static void main(String[] args) { PayrollSystem payroll = new
-	 * PayrollSystem(); payroll.callMainMenu(); }
-	 */
-	
-	/*
-	 * public void callMainMenu() {
-	 * 
-	 * UserLogin userLogin = new UserLogin(); userLogin.setVisible(true);
-	 * 
-	 * 
-	 * }
-	 */
-    
-    public void mainMenu() {
-    	profilePanel.setVisible(false);
-    	printNRead.printRead();   	
-    	getContentPane().remove(profilePanel);
-//    	getContentPane().add(profilePanel);
-    	setContentPane(mainPanel);
-    	setVisible(true);
-    	// Repaint the frame
-        revalidate();
-        repaint(); 
-         
-    }
-    
-    public void profileMenu() {
-    	setVisible(true);
-    	profilePanel.setVisible(true);
-    	// Remove the main panel from the frame
-        getContentPane().remove(mainPanel);
-
-        // Add the profile panel to the frame
-        getContentPane().add(profilePanel);
-        setContentPane(profilePanel);
-        // Repaint the frame
-        revalidate();
-        repaint();
-   }
 }

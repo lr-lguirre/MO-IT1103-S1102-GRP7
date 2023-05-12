@@ -105,12 +105,19 @@ public class JpAdmLogin extends JFrame {
 					username.setText(null);
 					pass.setText(null);
 					JOptionPane.showMessageDialog(contentPane, "Successful Login.");
-					JpEmpList frame = new JpEmpList();
-					JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
-					loginWindow.dispose();
-					frame.setVisible(true);
+					if (uid.matches("\\d{5}")) {
+						JpEmployee employee = new JpEmployee();
+						JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+						loginWindow.dispose();
+						employee.setVisible(true);						
+					} else {
+						JpEmpList frame = new JpEmpList();
+						JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+						loginWindow.dispose();
+						frame.setVisible(true);
+					}
 				} else {
-					JOptionPane.showMessageDialog(contentPane, "Invalid password. Try again.", "Error Message",
+					JOptionPane.showMessageDialog(contentPane, "Invalid Username or Password.", "Error Message",
 							JOptionPane.ERROR_MESSAGE);
 				}
 				Arrays.fill(pwd, '0');
@@ -136,7 +143,7 @@ public class JpAdmLogin extends JFrame {
 				JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(btnLogin);
 				loginWindow.dispose();
 			} else {
-				JOptionPane.showMessageDialog(contentPane, "Invalid password. Try again.", "Error Message",
+				JOptionPane.showMessageDialog(contentPane, "Invalid Username or Password. Please try again.", "Error Message",
 						JOptionPane.ERROR_MESSAGE);
 			}
 			Arrays.fill(pwd, '0');
