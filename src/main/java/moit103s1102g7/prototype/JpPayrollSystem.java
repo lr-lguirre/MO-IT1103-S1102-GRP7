@@ -42,13 +42,13 @@ public class JpPayrollSystem extends JFrame {
 	
 	Scanner scan = new Scanner(System.in);
 	
-	public JpPayrollSystem() { // Constructor
+	public JpPayrollSystem(String uid) { // Constructor
 		
 		// Initialize objects
-		jpEmployee = new JpEmployee();
+		jpEmployee = new JpEmployee(uid);
 		hoursWorked = new HoursWorked();
 		printNRead = new PrintNReadTxt();
-		jpPayslip = new JpPayslip();
+		jpPayslip = new JpPayslip(uid);
 		
 		// Swing components
 		// Initialize main panel

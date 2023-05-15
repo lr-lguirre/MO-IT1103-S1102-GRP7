@@ -65,6 +65,7 @@ public class JpPayslip extends JFrame {
 	protected double rice = 1500.0 / 4;
 	protected double phone = 1000.0 / 4;
 	protected double clothes = 1000.0 / 4;
+	private String uid;
 
 	/**
 	 * Launch the application.
@@ -86,7 +87,7 @@ public class JpPayslip extends JFrame {
 		 
 		EventQueue.invokeLater(() -> {
 			try {
-				JpPayslip frame = new JpPayslip();
+				JpPayslip frame = new JpPayslip(uid);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -98,7 +99,7 @@ public class JpPayslip extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JpPayslip() {
+	public JpPayslip(String uid) {
 		hrsWkd = new HoursWorked();
 		printRead = new PrintNReadTxt();
 		printRead.printRead();
@@ -584,7 +585,7 @@ public class JpPayslip extends JFrame {
 		btnBack.addActionListener((ActionEvent e1) -> {
 			setVisible(false);
 			dispose();
-			JpPayrollSystem payroll = new JpPayrollSystem();
+			JpPayrollSystem payroll = new JpPayrollSystem(uid);
 			payroll.profileMenu();
 		});
 		contentPane.add(btnBack);
@@ -658,6 +659,7 @@ public class JpPayslip extends JFrame {
 		setLocationRelativeTo(null);
 		
 	}
+
 
 
 	protected void helperPayrollCalculator() {

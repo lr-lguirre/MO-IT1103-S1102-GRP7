@@ -165,9 +165,22 @@ public class JpNewUser extends JFrame {
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Helper.verifyNewUser(textTIN1, textTIN2, textTIN3, textTIN4, username, textPassword1, textPassword2)) {
-					JOptionPane.showMessageDialog(null, "User created successfully");
-					dispose();
-				}
+	            	employeeLogin login = new employeeLogin();
+	            	login.setEmpid(username);
+	            	char[] cpassword = textPassword1.getPassword();
+	            	String password = new String(cpassword);
+	            	login.setPassword(password);
+	            	List<employeeLogin> loginDetails = new ArrayList<>();
+	            	loginDetails.add(login);
+	            	try {
+						writeCsvFiles.empLogin(loginDetails);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	            	JOptionPane.showMessageDialog(null, "User created successfully");
+	            	dispose();
+	            }
 			}
 		});
 		btnSignUp.setBounds(106, 227, 89, 23);

@@ -106,10 +106,10 @@ public class JpAdmLogin extends JFrame {
 					pass.setText(null);
 					JOptionPane.showMessageDialog(contentPane, "Successful Login.");
 					if (uid.matches("\\d{5}")) {
-						JpEmployee employee = new JpEmployee();
+						JpEmployee employee = new JpEmployee(uid);
 						JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
 						loginWindow.dispose();
-						employee.setVisible(true);						
+						employee.callProfileMenu();						
 					} else {
 						JpEmpList frame = new JpEmpList();
 						JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
@@ -117,8 +117,13 @@ public class JpAdmLogin extends JFrame {
 						frame.setVisible(true);
 					}
 				} else {
-					JOptionPane.showMessageDialog(contentPane, "Invalid Username or Password.", "Error Message",
-							JOptionPane.ERROR_MESSAGE);
+					if (uid.matches("\\d{5}")) {
+						JOptionPane.showMessageDialog(contentPane, "User does not exist. Please create account.",null, JOptionPane.ERROR_MESSAGE);
+						JpNewUser newUser = new JpNewUser(uid);
+						newUser.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(contentPane, "Invalid Login.",null, JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				Arrays.fill(pwd, '0');
 				pass.selectAll();
@@ -137,14 +142,25 @@ public class JpAdmLogin extends JFrame {
 				username.setText(null);
 				pass.setText(null);
 				JOptionPane.showMessageDialog(contentPane, "Successful Login.");
-				JpEmpList frame = new JpEmpList();
-				frame.setVisible(true);
-				// Dismiss the login window
-				JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(btnLogin);
-				loginWindow.dispose();
+				if (uid.matches("\\d{5}")) {
+					JpEmployee employee = new JpEmployee(uid);
+					JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+					loginWindow.dispose();
+					employee.callProfileMenu();						
+				} else {
+					JpEmpList frame = new JpEmpList();
+					JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+					loginWindow.dispose();
+					frame.setVisible(true);
+				}
 			} else {
-				JOptionPane.showMessageDialog(contentPane, "Invalid Username or Password. Please try again.", "Error Message",
-						JOptionPane.ERROR_MESSAGE);
+				if (uid.matches("\\d{5}")) {
+					JOptionPane.showMessageDialog(contentPane, "User does not exist. Please create account.",null, JOptionPane.ERROR_MESSAGE);
+					JpNewUser newUser = new JpNewUser(uid);
+					newUser.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "Invalid Login.",null, JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			Arrays.fill(pwd, '0');
 			pass.selectAll();

@@ -28,6 +28,10 @@ import javax.swing.border.LineBorder;
 
 public class HoursWorked extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private String[] payPeriod = {"======= Pay Period =======",
 								  "1st Week September 2022", 
@@ -101,10 +105,10 @@ public class HoursWorked extends JFrame {
 		lblEnterPayPeriod.setBounds(59, 52, 115, 14);
 		contentPane.add(lblEnterPayPeriod);
 		
-		JComboBox<String> comboBoxPayPeriod = new JComboBox<String>(payPeriod);
-		comboBoxPayPeriod.setBounds(174, 48, 193, 20);
+		// JComboBox<String> comboBoxPayPeriod = new JComboBox<String>(payPeriod);
+		// comboBoxPayPeriod.setBounds(174, 48, 193, 20);
 		
-		contentPane.add(comboBoxPayPeriod);
+		// contentPane.add(comboBoxPayPeriod);
 		
 		JButton btnSubmit = new JButton("Submit");
 //		btnSubmit.setEnabled(false);
@@ -113,91 +117,84 @@ public class HoursWorked extends JFrame {
 //			btnSubmit.setEnabled(true);
 //		}
 		
-		btnSubmit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[0])) {
-					
-					JOptionPane.showMessageDialog(HoursWorked.this, "       Please select pay period.", "Invalid Input", JOptionPane.INFORMATION_MESSAGE, null);
-				}
-				
-				if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[1])) {
-				
-				
-					
-				txtMondayDate.setText("September 5");
-				txtTuesdayDate.setText("September 6");
-				txtWednesdayDate.setText("September 7");
-				txtThursdayDate.setText("September 8");
-				txtFridayDate.setText("September 9");
-				
-				String empHrs1 = empHrsWkd[50] + "", empHrs2 = empHrsWkd[75] + "",
-					   empHrs3 = empHrsWkd[100] + "", empHrs4 = empHrsWkd[125] + "",
-					   empHrs5 = empHrsWkd[150] + "";
-				
-				txtMondayHrs.setText(empHrs1);
-				txtTuesdayHrs.setText(empHrs2);
-				txtWednesdayHrs.setText(empHrs3);
-				txtThursdayHrs.setText(empHrs4);
-				txtFridayHrs.setText(empHrs5);
-				
-				String empHrsTtl1 = calculateWeeklyHoursWorked(1) + "";
-				txtTotalHoursWorked.setText(empHrsTtl1);
-				
-				}
-				
-				if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[2])) {
-					
-					
-					
-					txtMondayDate.setText("September 12");
-					txtTuesdayDate.setText("September 13");
-					txtWednesdayDate.setText("September 14");
-					txtThursdayDate.setText("September 15");
-					txtFridayDate.setText("September 16");
-					
-					String empHrs6 = empHrsWkd[175] + "", empHrs7 = empHrsWkd[200] + "",
-							   empHrs8 = empHrsWkd[225] + "", empHrs9 = empHrsWkd[250] + "",
-							   empHrs10 = empHrsWkd[275] + "";
-					
-					txtMondayHrs.setText(empHrs6);
-					txtTuesdayHrs.setText(empHrs7);
-					txtWednesdayHrs.setText(empHrs8);
-					txtThursdayHrs.setText(empHrs9);
-					txtFridayHrs.setText(empHrs10);
-					
-					String empHrsTtl1 = calculateWeeklyHoursWorked(2) + "";
-					txtTotalHoursWorked.setText(empHrsTtl1);
-
-					
-				}
-				
-				if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[3])) {
-					
-					
-					
-					txtMondayDate.setText("September 19");
-					txtTuesdayDate.setText("September 20");
-					txtWednesdayDate.setText("September 21");
-					txtThursdayDate.setText("September 22");
-					txtFridayDate.setText("September 23");
-					
-					String empHrs11 = empHrsWkd[300] + "", empHrs12 = empHrsWkd[325] + "",
-						   empHrs13 = empHrsWkd[350] + "", empHrs14 = empHrsWkd[375] + "",
-						   empHrs15 = empHrsWkd[400] + "";
-					
-					txtMondayHrs.setText(empHrs11);
-					txtTuesdayHrs.setText(empHrs12);
-					txtWednesdayHrs.setText(empHrs13);
-					txtThursdayHrs.setText(empHrs14);
-					txtFridayHrs.setText(empHrs15);
-					
-					String empHrsTtl1 = calculateWeeklyHoursWorked(3) + "";
-					txtTotalHoursWorked.setText(empHrsTtl1);
-					
-				}
-			}
-		});
+		/*
+		 * btnSubmit.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) {
+		 * 
+		 * if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[0])) {
+		 * 
+		 * JOptionPane.showMessageDialog(HoursWorked.this,
+		 * "       Please select pay period.", "Invalid Input",
+		 * JOptionPane.INFORMATION_MESSAGE, null); }
+		 * 
+		 * if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[1])) {
+		 * 
+		 * 
+		 * 
+		 * txtMondayDate.setText("September 5"); txtTuesdayDate.setText("September 6");
+		 * txtWednesdayDate.setText("September 7");
+		 * txtThursdayDate.setText("September 8"); txtFridayDate.setText("September 9");
+		 * 
+		 * String empHrs1 = empHrsWkd[50] + "", empHrs2 = empHrsWkd[75] + "", empHrs3 =
+		 * empHrsWkd[100] + "", empHrs4 = empHrsWkd[125] + "", empHrs5 = empHrsWkd[150]
+		 * + "";
+		 * 
+		 * txtMondayHrs.setText(empHrs1); txtTuesdayHrs.setText(empHrs2);
+		 * txtWednesdayHrs.setText(empHrs3); txtThursdayHrs.setText(empHrs4);
+		 * txtFridayHrs.setText(empHrs5);
+		 * 
+		 * String empHrsTtl1 = calculateWeeklyHoursWorked(1) + "";
+		 * txtTotalHoursWorked.setText(empHrsTtl1);
+		 * 
+		 * }
+		 * 
+		 * if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[2])) {
+		 * 
+		 * 
+		 * 
+		 * txtMondayDate.setText("September 12");
+		 * txtTuesdayDate.setText("September 13");
+		 * txtWednesdayDate.setText("September 14");
+		 * txtThursdayDate.setText("September 15");
+		 * txtFridayDate.setText("September 16");
+		 * 
+		 * String empHrs6 = empHrsWkd[175] + "", empHrs7 = empHrsWkd[200] + "", empHrs8
+		 * = empHrsWkd[225] + "", empHrs9 = empHrsWkd[250] + "", empHrs10 =
+		 * empHrsWkd[275] + "";
+		 * 
+		 * txtMondayHrs.setText(empHrs6); txtTuesdayHrs.setText(empHrs7);
+		 * txtWednesdayHrs.setText(empHrs8); txtThursdayHrs.setText(empHrs9);
+		 * txtFridayHrs.setText(empHrs10);
+		 * 
+		 * String empHrsTtl1 = calculateWeeklyHoursWorked(2) + "";
+		 * txtTotalHoursWorked.setText(empHrsTtl1);
+		 * 
+		 * 
+		 * }
+		 * 
+		 * if (comboBoxPayPeriod.getSelectedItem().equals(payPeriod[3])) {
+		 * 
+		 * 
+		 * 
+		 * txtMondayDate.setText("September 19");
+		 * txtTuesdayDate.setText("September 20");
+		 * txtWednesdayDate.setText("September 21");
+		 * txtThursdayDate.setText("September 22");
+		 * txtFridayDate.setText("September 23");
+		 * 
+		 * String empHrs11 = empHrsWkd[300] + "", empHrs12 = empHrsWkd[325] + "",
+		 * empHrs13 = empHrsWkd[350] + "", empHrs14 = empHrsWkd[375] + "", empHrs15 =
+		 * empHrsWkd[400] + "";
+		 * 
+		 * txtMondayHrs.setText(empHrs11); txtTuesdayHrs.setText(empHrs12);
+		 * txtWednesdayHrs.setText(empHrs13); txtThursdayHrs.setText(empHrs14);
+		 * txtFridayHrs.setText(empHrs15);
+		 * 
+		 * String empHrsTtl1 = calculateWeeklyHoursWorked(3) + "";
+		 * txtTotalHoursWorked.setText(empHrsTtl1);
+		 * 
+		 * } } });
+		 */
 		btnSubmit.setBounds(164, 79, 106, 23);
 		contentPane.add(btnSubmit);
 		
@@ -373,11 +370,13 @@ public class HoursWorked extends JFrame {
 		btnBack.setBounds(338, 304, 64, 23);
 		btnBack.addActionListener(new ActionListener() {
 			
+			private String uid;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				dispose();
-				JpPayrollSystem payroll = new JpPayrollSystem();
+				JpPayrollSystem payroll = new JpPayrollSystem(uid);
 				payroll.profileMenu();
 				
 			}

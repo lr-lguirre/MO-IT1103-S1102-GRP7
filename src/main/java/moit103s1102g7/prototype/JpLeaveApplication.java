@@ -81,9 +81,11 @@ public class JpLeaveApplication extends JFrame {
 	 */
 	public static void leaves(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			private String uid;
+
 			public void run() {
 				try {
-					JpLeaveApplication frame = new JpLeaveApplication();
+					JpLeaveApplication frame = new JpLeaveApplication(uid);
 					// frame.readCsvFiles();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -142,7 +144,7 @@ public class JpLeaveApplication extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JpLeaveApplication() {
+	public JpLeaveApplication(String uid) {
 
 		setTitle("MotorPH Employee Leave");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -160,11 +162,13 @@ public class JpLeaveApplication extends JFrame {
 		btnBack.setBounds(496, 338, 64, 23);
 		btnBack.addActionListener(new ActionListener() {
 			
+			private String uid;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 	        	dispose();
-	        	JpPayrollSystem menu = new JpPayrollSystem();
+	        	JpPayrollSystem menu = new JpPayrollSystem(uid);
 	        	menu.profileMenu();
 				
 			}

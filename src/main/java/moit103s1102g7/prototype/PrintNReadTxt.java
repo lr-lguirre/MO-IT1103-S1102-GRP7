@@ -14,10 +14,10 @@ public class PrintNReadTxt {
 
     public void printRead() {
         try {
-            FileReader file = new FileReader("Daily Timesheet.txt");
+            FileReader file = new FileReader("timesheet.csv");
             Scanner inFile = new Scanner(file);
 
-            PrintWriter outFile = new PrintWriter("HrsWkd.txt");
+            PrintWriter outFile = new PrintWriter("HrsWkd.csv");
 
             // Read till end of file
             int i = 0;
@@ -47,7 +47,7 @@ public class PrintNReadTxt {
                 k++;
             }
 
-            FileReader file1 = new FileReader("HrsWkd.txt");
+            FileReader file1 = new FileReader("HrsWkd.csv");
             Scanner inFile1 = new Scanner(file1);
 
             // Read till end of file

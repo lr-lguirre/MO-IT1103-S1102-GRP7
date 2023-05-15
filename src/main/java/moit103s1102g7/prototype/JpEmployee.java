@@ -26,22 +26,54 @@ public class JpEmployee extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lblPersonalInfo,lblSalaryInfo, lblEmployeeNo, lblLastName, 
-	lblFirstName, lblBirthday, lblAddress, lblPhoneNo, lblSssNo, lblPhic, lblTinNo,
-	lblHdmfNo;
-	private JTextField txtEmployeeNo, txtLastName, 
-	txtFirstName, txtBirthday, txtAddress, txtPhoneNo, txtSssNo, txtPhic, txtTinNo,
-	txtHdmfNo;
+	private JLabel lblPersonalInfo;
+	private JLabel lblSalaryInfo;
+	private JLabel lblEmployeeNo;
+	private JLabel lblLastName;
+	private JLabel lblFirstName;
+	private JLabel lblBirthday;
+	private JLabel lblAddress;
+	private JLabel lblPhoneNo;
+	private JLabel lblSssNo;
+	private JLabel lblPhic;
+	private JLabel lblTinNo;
+	private JLabel lblHdmfNo;
+	private JTextField txtEmployeeNo;
+	private JTextField txtLastName;
+	private JTextField txtFirstName;
+	private JTextField txtBirthday;
+	private JTextField txtAddress;
+	private JTextField txtPhoneNo;
+	private JTextField txtSssNo;
+	private JTextField txtPhic;
+	private JTextField txtTinNo;
+	private JTextField txtHdmfNo;
 	// Variables for Salary Info Panel
-	private JLabel lblSalEmployeeNo, lblEmployeeStats, lblEmployeePosition, lblSalaryClass,
-	lblBasicSalary, lblRiceSubsidy, lblPhoneAllowance, lblClothingAllowance;
-	private JTextField txtSalEmployeeNo, txtEmployeeStats, txtEmployeePosition, txtSalaryClass,
-	txtBasicSalary, txtRiceSubsidy, txtPhoneAllowance, txtClothingAllowance;
+	private JLabel lblSalEmployeeNo;
+	private JLabel lblEmployeeStats;
+	private JLabel lblEmployeePosition;
+	private JLabel lblSalaryClass;
+	private JLabel lblBasicSalary;
+	private JLabel lblRiceSubsidy;
+	private JLabel lblPhoneAllowance;
+	private JLabel lblClothingAllowance;
+	private JTextField txtSalEmployeeNo;
+	private JTextField txtEmployeeStats;
+	private JTextField txtEmployeePosition;
+	private JTextField txtSalaryClass;
+	private JTextField txtBasicSalary;
+	private JTextField txtRiceSubsidy;
+	private JTextField txtPhoneAllowance;
+	private JTextField txtClothingAllowance;
 	
-	private JButton btnLogout, btnSalaryBack;
-	private JPanel personalInfoPanel, salaryInfoPanel;
+	private JButton btnLogout;
+	private JButton btnSalaryBack;
+	private JPanel personalInfoPanel;
+	private JPanel salaryInfoPanel;
+	protected String uid;
 	
-	public JpEmployee() {
+	public JpEmployee(String uid) {
+
 		// Swing components
 		// Initialize panel for personal information
 		personalInfoPanel = new JPanel();
@@ -185,7 +217,7 @@ public class JpEmployee extends JFrame {
 		txtSalEmployeeNo = new JTextField(20);
 		txtSalEmployeeNo.setEnabled(false);
 		txtSalEmployeeNo.setDisabledTextColor(new Color(128, 128, 128));
-		txtSalEmployeeNo.setText("10001");
+		txtSalEmployeeNo.setText(uid);
 		
 		txtEmployeeStats = new JTextField(20);
 		txtEmployeeStats.setEnabled(false);
@@ -373,7 +405,7 @@ public class JpEmployee extends JFrame {
 		// Hide Employee Info Window
 		setVisible(false);
 		dispose();
-		JpPayrollSystem payroll = new JpPayrollSystem();
+		JpPayrollSystem payroll = new JpPayrollSystem(uid);
 		payroll.profileMenu();
 		
 	}
