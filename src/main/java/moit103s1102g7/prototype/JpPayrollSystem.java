@@ -23,7 +23,7 @@ public class JpPayrollSystem extends JFrame {
 	private JpEmployee jpEmployee;
 	private HoursWorked hoursWorked;
 	private PrintNReadTxt printNRead;
-	private JpPayslip jpPayslip;
+	private JpEmpPayslip jpEmpPayslip;
 	// private variables for the Swing components
 	Font font = new Font("Nexa Book", Font.BOLD, 15);
 	
@@ -32,7 +32,7 @@ public class JpPayrollSystem extends JFrame {
 		jpEmployee = new JpEmployee(uid);
 		hoursWorked = new HoursWorked();
 		printNRead = new PrintNReadTxt();
-		jpPayslip = new JpPayslip(uid);
+		jpEmpPayslip = new JpEmpPayslip(uid);
 		// Initialize the profile panel
 		
 		// Set-up the frame

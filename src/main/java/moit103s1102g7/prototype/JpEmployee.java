@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,19 +17,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 
 public class JpEmployee extends JFrame {
-	
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel lblPersonalInfo;
-	private JLabel lblSalaryInfo;
 	private JLabel lblEmployeeNo;
 	private JLabel lblLastName;
 	private JLabel lblFirstName;
@@ -42,43 +43,37 @@ public class JpEmployee extends JFrame {
 	private JTextField txtLastName;
 	private JTextField txtFirstName;
 	private JTextField txtBirthday;
-	private JTextField txtAddress;
+	private JTextArea txtAddress;
 	private JTextField txtPhoneNo;
 	private JTextField txtSssNo;
 	private JTextField txtPhic;
 	private JTextField txtTinNo;
 	private JTextField txtHdmfNo;
 	// Variables for Salary Info Panel
-	private JLabel lblSalEmployeeNo;
-	private JLabel lblEmployeeStats;
-	private JLabel lblEmployeePosition;
-	private JLabel lblSalaryClass;
-	private JLabel lblBasicSalary;
-	private JLabel lblRiceSubsidy;
-	private JLabel lblPhoneAllowance;
-	private JLabel lblClothingAllowance;
-	private JTextField txtSalEmployeeNo;
-	private JTextField txtEmployeeStats;
-	private JTextField txtEmployeePosition;
-	private JTextField txtSalaryClass;
-	private JTextField txtBasicSalary;
-	private JTextField txtRiceSubsidy;
-	private JTextField txtPhoneAllowance;
-	private JTextField txtClothingAllowance;
-	
+
 	private JButton btnLogout;
-	private JButton btnSalaryBack;
 	private JPanel personalInfoPanel;
 	private JPanel salaryInfoPanel;
 	protected String uid;
-	
+
 	public JpEmployee(String uid) {
+		Helper helper = new Helper();
+		Map<String, Object> empinfo = helper.employeeInfo(uid);
+		String fname = (String) empinfo.get("empFName");
+		String lname = (String) empinfo.get("empLname");
+		String birthday = (String) empinfo.get("empBdate");
+		String address = (String) empinfo.get("empAddress");
+		String phone = (String) empinfo.get("empPhone");
+		String sss = (String) empinfo.get("empSSS");
+		String philhealth = (String) empinfo.get("empPhilhealth");
+		String tin = (String) empinfo.get("empTIN");
+		String pagibig = (String) empinfo.get("empPagibig");
 
 		// Swing components
 		// Initialize panel for personal information
 		personalInfoPanel = new JPanel();
 		personalInfoPanel.setLayout(null);
-		
+
 		// Personal Info panel components
 		lblPersonalInfo = new JLabel("Personal Information");
 		lblPersonalInfo.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -88,69 +83,84 @@ public class JpEmployee extends JFrame {
 		lblBirthday = new JLabel("Birthday:");
 		lblAddress = new JLabel("Address:");
 		lblPhoneNo = new JLabel("Phone No.:");
-		lblSssNo= new JLabel("SSS No.:");
+		lblSssNo = new JLabel("SSS No.:");
 		lblPhic = new JLabel("Philhealth No.:");
 		lblTinNo = new JLabel("TIN No.:");
 		lblHdmfNo = new JLabel("Pag-ibig No.:");
-		
+
 		txtEmployeeNo = new JTextField(20);
 		txtEmployeeNo.setEditable(false);
 		txtEmployeeNo.setEnabled(false);
+		txtEmployeeNo.setText(uid);
 		txtEmployeeNo.setDisabledTextColor(new Color(128, 128, 128));
-		
+
 		txtLastName = new JTextField(20);
 		txtLastName.setEditable(false);
 		txtLastName.setEnabled(false);
+		txtLastName.setText(lname);
 		txtLastName.setDisabledTextColor(new Color(128, 128, 128));
-		
+
 		txtFirstName = new JTextField(20);
 		txtFirstName.setEditable(false);
 		txtFirstName.setEnabled(false);
+		txtFirstName.setText(fname);
 		txtFirstName.setDisabledTextColor(new Color(128, 128, 128));
-		
+
 		txtBirthday = new JTextField(20);
 		txtBirthday.setEditable(false);
 		txtBirthday.setEnabled(false);
+		txtBirthday.setText(birthday);
 		txtBirthday.setDisabledTextColor(new Color(128, 128, 128));
-		
-		txtAddress = new JTextField(20);
-		txtAddress.setEnabled(false);
+
+		txtAddress = new JTextArea(0, 0);
+		txtAddress.setEnabled(true);
+		txtAddress.setLineWrap(true);
+		txtAddress.setWrapStyleWord(true);
+		txtAddress.setText(address);
 		txtAddress.setDisabledTextColor(new Color(128, 128, 128));
-		
+
 		txtPhoneNo = new JTextField(20);
-		txtPhoneNo.setEnabled(false);
+		txtPhoneNo.setEnabled(true);
+		txtPhoneNo.setText(phone);
 		txtPhoneNo.setDisabledTextColor(new Color(128, 128, 128));
-		
+
 		txtSssNo = new JTextField(20);
 		txtSssNo.setEditable(false);
 		txtSssNo.setEnabled(false);
+		txtSssNo.setText(sss);
 		txtSssNo.setDisabledTextColor(new Color(128, 128, 128));
-		
+
 		txtPhic = new JTextField(20);
 		txtPhic.setEditable(false);
 		txtPhic.setEnabled(false);
+		txtPhic.setText(philhealth);
 		txtPhic.setDisabledTextColor(new Color(128, 128, 128));
-		
+
 		txtTinNo = new JTextField(20);
 		txtTinNo.setEditable(false);
 		txtTinNo.setEnabled(false);
+		txtTinNo.setText(tin);
 		txtTinNo.setDisabledTextColor(new Color(128, 128, 128));
-		
+
 		txtHdmfNo = new JTextField(20);
 		txtHdmfNo.setEditable(false);
 		txtHdmfNo.setEnabled(false);
+		txtHdmfNo.setText(pagibig);
 		txtHdmfNo.setDisabledTextColor(new Color(128, 128, 128));
-		
+
 		btnLogout = new JButton("Logout");
 		btnLogout.setBounds(490, 270, 80, 30);
 		btnLogout.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				callProfileMenu();				
+				setVisible(false);
+				dispose();
+				JpEmpProfileMenu empMenu = new JpEmpProfileMenu(uid);
+				empMenu.setVisible(true);
 			}
 		});
-		
+
 		// Set label and text field positions
 		lblPersonalInfo.setBounds(250, 10, 250, 40);
 		lblEmployeeNo.setBounds(50, 50, 100, 20);
@@ -162,18 +172,18 @@ public class JpEmployee extends JFrame {
 		lblBirthday.setBounds(50, 140, 100, 20);
 		txtBirthday.setBounds(150, 140, 150, 20);
 		lblAddress.setBounds(50, 170, 100, 20);
-		txtAddress.setBounds(150, 170, 150, 20);
-		lblPhoneNo.setBounds(50, 200, 100, 20);
-		txtPhoneNo.setBounds(150, 200, 150, 20);
-		lblSssNo.setBounds(50, 230, 100, 20);
-		txtSssNo.setBounds(150, 230, 150, 20);
+		txtAddress.setBounds(150, 170, 250, 49);
+		lblPhoneNo.setBounds(50, 230, 100, 20);
+		txtPhoneNo.setBounds(150, 230, 150, 20);
+		lblSssNo.setBounds(320, 140, 100, 20);
+		txtSssNo.setBounds(420, 140, 150, 20);
 		lblPhic.setBounds(320, 50, 100, 20);
 		txtPhic.setBounds(420, 50, 150, 20);
 		lblTinNo.setBounds(320, 80, 100, 20);
 		txtTinNo.setBounds(420, 80, 150, 20);
 		lblHdmfNo.setBounds(320, 110, 100, 20);
 		txtHdmfNo.setBounds(420, 110, 150, 20);
-		
+
 		// Add components to personal info panel
 		personalInfoPanel.add(lblPersonalInfo);
 		personalInfoPanel.add(lblEmployeeNo);
@@ -197,161 +207,69 @@ public class JpEmployee extends JFrame {
 		personalInfoPanel.add(lblHdmfNo);
 		personalInfoPanel.add(txtHdmfNo);
 		personalInfoPanel.add(btnLogout);
-		
+
 		// Initialize panel for salary info
 		salaryInfoPanel = new JPanel();
 		salaryInfoPanel.setLayout(null);
-		
-		// Salary Info Panel components
-		lblSalaryInfo = new JLabel("Salary Information");
-		lblSalaryInfo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblSalEmployeeNo = new JLabel("Employee No.:");
-		lblEmployeeStats = new JLabel("Employee Status:");
-		lblEmployeePosition = new JLabel("Employee Position:");
-		lblSalaryClass = new JLabel("Salary Class:");
-		lblBasicSalary = new JLabel("Basic Salary:");
-		lblRiceSubsidy = new JLabel("Rice Subsidy:");
-		lblPhoneAllowance = new JLabel("Phone Allowance:");
-		lblClothingAllowance = new JLabel("Clothing Subsidy:");
-		
-		
-		
-		btnSalaryBack = new JButton("Back");
-		btnSalaryBack.setBounds(265, 260, 80, 30);
-		btnSalaryBack.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				callProfileMenu();				
-			}
-		});
-		
-		// Set label and text field positions
-		lblSalaryInfo.setBounds(250, 10, 150, 40);
-		lblSalEmployeeNo.setBounds(20, 60, 100, 20);
-		txtSalEmployeeNo.setBounds(150, 60, 150, 20);
-		lblEmployeeStats.setBounds(320, 60, 100, 20);
-		txtEmployeeStats.setBounds(430, 60, 150, 20);
-		lblEmployeePosition.setBounds(20, 100, 120, 20);
-		txtEmployeePosition.setBounds(150, 100, 150, 20);
-		lblSalaryClass.setBounds(320, 100, 100, 20);
-		txtSalaryClass.setBounds(430, 100, 150, 20);
-		lblBasicSalary.setBounds(20, 140, 100, 20);
-		txtBasicSalary.setBounds(150, 140, 150, 20);
-		lblRiceSubsidy.setBounds(320, 140, 100, 20);
-		txtRiceSubsidy.setBounds(430, 140, 150, 20);
-		lblPhoneAllowance.setBounds(20, 180, 120, 20);
-		txtPhoneAllowance.setBounds(150, 180, 150, 20);
-		lblClothingAllowance.setBounds(320, 180, 110, 20);
-		txtClothingAllowance.setBounds(430, 180, 150, 20);
 
-		
-		
-		
 		// Add main panel to the frame
 		getContentPane().add(personalInfoPanel);
-		
+
 		JButton btnPayslip = new JButton("Payslip");
-		btnPayslip.setBounds(481, 139, 89, 23);
+		btnPayslip.setBounds(481, 169, 89, 23);
 		personalInfoPanel.add(btnPayslip);
-		
+
 		JButton btnAttendance = new JButton("Attendance");
-		btnAttendance.setBounds(481, 169, 89, 23);
+		btnAttendance.setBounds(481, 199, 89, 23);
 		personalInfoPanel.add(btnAttendance);
-		
+
 		JButton btnNewButton = new JButton("Leaves");
-		btnNewButton.setBounds(481, 200, 89, 21);
+		btnNewButton.setBounds(481, 230, 89, 21);
 		personalInfoPanel.add(btnNewButton);
-		
+
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.setBounds(150, 270, 89, 30);
 		personalInfoPanel.add(btnUpdate);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setToolTipText("View");
 		menuBar.setBounds(0, 0, 37, 22);
 		personalInfoPanel.add(menuBar);
-		
+
 		JMenu mnView = new JMenu("View");
 		menuBar.add(mnView);
-		
+
 		JMenuItem mntmPayslip = new JMenuItem("Payslip");
 		mnView.add(mntmPayslip);
-		
+
 		JMenuItem mntmAttendance = new JMenuItem("Attendance");
 		mnView.add(mntmAttendance);
-		
+
 		JMenuItem mntmLeaves = new JMenuItem("Leaves");
 		mnView.add(mntmLeaves);
-		
+
 		// Set-up the frame
 		setTitle("Employee Info Menu");
-		setSize(630,350);
+		setSize(630, 350);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
-    	    public void windowClosing(WindowEvent e) {
-    	        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-    	        if (confirm == JOptionPane.YES_OPTION) {
-    	            // Close the application
-    	            System.exit(0);
-    	        }
-    	    }
-    	});
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit",
+						JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					// Close the application
+					System.exit(0);
+				}
+			}
+		});
 		setResizable(true);
-		    	
+
 		// Sets icon image for the application
 		ImageIcon icon = new ImageIcon("MOTORPH.png");
 		setIconImage(icon.getImage());
-		    	
+
 		personalInfoPanel.setVisible(true);
 
-		
-	}
-
-
-	public void printPersonalInfo() {
-//		salaryInfoPanel.setVisible(false); 	
-//    	getContentPane().remove(salaryInfoPanel);
-//    	getContentPane().add(profilePanel);
-    	setContentPane(personalInfoPanel);
-    	setVisible(true);
-    	// Repaint the frame
-        revalidate();
-        repaint();
-		
-	}
-	
-	public void printSalaryRecords() {
-		
-		setContentPane(salaryInfoPanel);
-    	setVisible(true);
-    	// Repaint the frame
-        revalidate();
-        repaint();
-		
-		
-		/*
-		System.out.println("Salary Information:");
-		
-		for (int i = 0; i < 50; i++) {
-			System.out.print("=");}
-		
-		System.out.println();
-		System.out.println(employeeSalary);
-		
-		for (int i = 0; i < 50; i++) {
-			System.out.print("=");}
-			*/
-	}
-	
-	public void callProfileMenu() {
-		
-		// Hide Employee Info Window
-		setVisible(false);
-		dispose();
-		JpPayrollSystem payroll = new JpPayrollSystem(uid);
-		payroll.profileMenu();
-		
 	}
 }

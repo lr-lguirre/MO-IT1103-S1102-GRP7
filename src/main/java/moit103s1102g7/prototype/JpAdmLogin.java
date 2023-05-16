@@ -106,10 +106,10 @@ public class JpAdmLogin extends JFrame {
 					pass.setText(null);
 					JOptionPane.showMessageDialog(contentPane, "Successful Login.");
 					if (uid.matches("\\d{5}")) {
-						JpPayrollSystem employee = new JpPayrollSystem(uid);
+						JpEmpMainPanel employee = new JpEmpMainPanel(uid);
 						JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
 						loginWindow.dispose();
-						employee.mainMenu();						
+						employee.setVisible(true);						
 					} else {
 						JpEmpList frame = new JpEmpList();
 						JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
@@ -143,10 +143,10 @@ public class JpAdmLogin extends JFrame {
 				pass.setText(null);
 				JOptionPane.showMessageDialog(contentPane, "Successful Login.");
 				if (uid.matches("\\d{5}")) {
-					JpPayrollSystem employee = new JpPayrollSystem(uid);
+					JpEmpMainPanel employee = new JpEmpMainPanel(uid);
 					JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
 					loginWindow.dispose();
-					employee.mainMenu();					
+					employee.setVisible(true);					
 				} else {
 					JpEmpList frame = new JpEmpList();
 					JFrame loginWindow = (JFrame) SwingUtilities.getWindowAncestor(contentPane);

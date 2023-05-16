@@ -1,6 +1,5 @@
 package moit103s1102g7.prototype;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
@@ -8,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+
 
 public class JpEmpProfileMenu extends JFrame {
 
@@ -29,11 +28,13 @@ public class JpEmpProfileMenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JpEmpProfileMenu() {
+	public JpEmpProfileMenu(String uid) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		profilePanel = new JPanel();
+		setContentPane(profilePanel);
 		profilePanel.setLayout(null);
+
 		
 		// Profile panel components
 		lblProfileMenu = new JLabel("My Profile Menu");
@@ -57,16 +58,18 @@ public class JpEmpProfileMenu extends JFrame {
 			setVisible(false);
 			dispose();
 			JpEmployee empInfo = new JpEmployee(uid);
-			//jpEmployee.printPersonalInfo();
-			
+			empInfo.setVisible(true);
 		});
+		profilePanel.add(btnPersonalInfo);
 		
 		btnSalaryInfo.addActionListener((ActionEvent e1) -> {
 			setVisible(false);
 			dispose();
-			//jpEmployee.printSalaryRecords();
+			JpEmpSalaryInfo salaryInfo = new JpEmpSalaryInfo(uid);
+			salaryInfo.setVisible(true);
 			
 		});
+		profilePanel.add(btnSalaryInfo);
 		
 		btnDailyTimesheet.addActionListener((ActionEvent e2) -> {
 			setVisible(false);
@@ -74,25 +77,23 @@ public class JpEmpProfileMenu extends JFrame {
 			//hoursWorked.displayTimeSheet();
 			
 		});
+		profilePanel.add(btnDailyTimesheet);
 		
 		btnPayslip.addActionListener((ActionEvent e3) -> {
 			setVisible(false);
 			dispose();
-			//.displayPayslip();
-			
+			JpEmpPayslip payslip = new JpEmpPayslip(uid);
+			payslip.setVisible(true);
 		});
+		profilePanel.add(btnPayslip);
 		
 		btnBack.addActionListener((ActionEvent e4) -> {
-			//mainMenu();
-			
+			setVisible(false);
+			dispose();
+			JpEmpMainPanel mainPanel = new JpEmpMainPanel(uid);
+			mainPanel.setVisible(true);			
 		});
-		
-		profilePanel.add(btnPersonalInfo);
-		profilePanel.add(btnSalaryInfo);
-		profilePanel.add(btnDailyTimesheet);
-		profilePanel.add(btnPayslip);
 		profilePanel.add(btnBack);
-		setContentPane(profilePanel);
 	}
 
 }

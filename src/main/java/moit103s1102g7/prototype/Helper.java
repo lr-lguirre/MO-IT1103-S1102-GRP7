@@ -2,6 +2,8 @@ package moit103s1102g7.prototype;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -54,5 +56,29 @@ public class Helper {
 	    
 	    isVerified = true;
 	    return isVerified;
+	}
+
+	public Map<String, Object> employeeInfo(String uid) {
+	    Map<String, Object> empInfo = new HashMap<>();
+	    employeeDetails.stream().filter(e -> e.getEmpid().equals(uid)).findFirst().ifPresent(e -> {
+	        empInfo.put("empFName", e.getEmpFName());
+	        empInfo.put("empLname", e.getEmpLname());
+	        empInfo.put("empBdate", e.getEmpBdate());
+	        empInfo.put("empAddress", e.getEmpAddress());
+	        empInfo.put("empPhone", e.getEmpPhone());
+	        empInfo.put("empSSS", e.getEmpSSS());
+	        empInfo.put("empPhilhealth", e.getEmpPhilhealth());
+	        empInfo.put("empTIN", e.getEmpTIN());
+	        empInfo.put("empPagibig", e.getEmpPagibig());
+	        empInfo.put("empStatus", e.getEmpStatus());
+	        empInfo.put("empPosition", e.getEmpPosition());
+	        empInfo.put("empSupervisor", e.getEmpSupervisor());
+	        empInfo.put("empSalary", e.getEmpSalary());
+	        empInfo.put("empRice", e.getEmpRice());
+	        empInfo.put("empPhoneAllowance", e.getEmpPhoneAllowance());
+	        empInfo.put("empClothing", e.getEmpClothing());
+	        empInfo.put("empSemi", e.getEmpSemi());
+	    });
+	    return empInfo;
 	}
 }
