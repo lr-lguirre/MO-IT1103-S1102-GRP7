@@ -214,45 +214,7 @@ public class JpEmployee extends JFrame {
 		lblPhoneAllowance = new JLabel("Phone Allowance:");
 		lblClothingAllowance = new JLabel("Clothing Subsidy:");
 		
-		txtSalEmployeeNo = new JTextField(20);
-		txtSalEmployeeNo.setEnabled(false);
-		txtSalEmployeeNo.setDisabledTextColor(new Color(128, 128, 128));
-		txtSalEmployeeNo.setText(uid);
 		
-		txtEmployeeStats = new JTextField(20);
-		txtEmployeeStats.setEnabled(false);
-		txtEmployeeStats.setDisabledTextColor(new Color(128, 128, 128));
-		txtEmployeeStats.setText("Regular");
-		
-		txtEmployeePosition	= new JTextField(20);
-		txtEmployeePosition.setEnabled(false);
-		txtEmployeePosition.setDisabledTextColor(new Color(128, 128, 128));
-		txtEmployeePosition.setText("HR Manager");
-		
-		txtSalaryClass = new JTextField(20);
-		txtSalaryClass.setEnabled(false);
-		txtSalaryClass.setDisabledTextColor(new Color(128, 128, 128));
-		txtSalaryClass.setText("Rank and File");
-		
-		txtBasicSalary = new JTextField(20);
-		txtBasicSalary.setEnabled(false);
-		txtBasicSalary.setDisabledTextColor(new Color(128, 128, 128));
-		txtBasicSalary.setText("PHP 62, 670.00");
-		
-		txtRiceSubsidy = new JTextField(20);
-		txtRiceSubsidy.setEnabled(false);
-		txtRiceSubsidy.setDisabledTextColor(new Color(128, 128, 128));
-		txtRiceSubsidy.setText("PHP 1,500.00");
-		
-		txtPhoneAllowance = new JTextField(20);
-		txtPhoneAllowance.setEnabled(false);
-		txtPhoneAllowance.setDisabledTextColor(new Color(128, 128, 128));
-		txtPhoneAllowance.setText("PHP 1,000.00");
-		
-		txtClothingAllowance = new JTextField(20);
-		txtClothingAllowance.setEnabled(false);
-		txtClothingAllowance.setDisabledTextColor(new Color(128, 128, 128));
-		txtClothingAllowance.setText("PHP 1,000.00");
 		
 		btnSalaryBack = new JButton("Back");
 		btnSalaryBack.setBounds(265, 260, 80, 30);
@@ -283,25 +245,7 @@ public class JpEmployee extends JFrame {
 		lblClothingAllowance.setBounds(320, 180, 110, 20);
 		txtClothingAllowance.setBounds(430, 180, 150, 20);
 
-		// Add components to salary info panel
-		salaryInfoPanel.add(lblSalaryInfo);
-		salaryInfoPanel.add(lblSalEmployeeNo);
-		salaryInfoPanel.add(txtSalEmployeeNo);
-		salaryInfoPanel.add(lblEmployeeStats);
-		salaryInfoPanel.add(lblEmployeePosition);
-		salaryInfoPanel.add(lblSalaryClass);
-		salaryInfoPanel.add(lblBasicSalary);
-		salaryInfoPanel.add(lblRiceSubsidy);
-		salaryInfoPanel.add(lblPhoneAllowance);
-		salaryInfoPanel.add(lblClothingAllowance);
-		salaryInfoPanel.add(txtEmployeeStats);
-		salaryInfoPanel.add(txtEmployeePosition);
-		salaryInfoPanel.add(txtSalaryClass);
-		salaryInfoPanel.add(txtBasicSalary);
-		salaryInfoPanel.add(txtRiceSubsidy);
-		salaryInfoPanel.add(txtPhoneAllowance);
-		salaryInfoPanel.add(txtClothingAllowance);
-		salaryInfoPanel.add(btnSalaryBack);
+		
 		
 		
 		// Add main panel to the frame
@@ -364,7 +308,8 @@ public class JpEmployee extends JFrame {
 
 		
 	}
-	
+
+
 	public void printPersonalInfo() {
 //		salaryInfoPanel.setVisible(false); 	
 //    	getContentPane().remove(salaryInfoPanel);
