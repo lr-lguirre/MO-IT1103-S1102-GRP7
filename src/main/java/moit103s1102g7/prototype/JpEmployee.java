@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import com.opencsv.exceptions.CsvException;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JMenuBar;
@@ -112,17 +118,90 @@ public class JpEmployee extends JFrame {
 		txtBirthday.setText(birthday);
 		txtBirthday.setDisabledTextColor(new Color(128, 128, 128));
 
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBounds(150, 270, 89, 30);
+		personalInfoPanel.add(btnUpdate);
+		btnUpdate.setEnabled(false);
+
 		txtAddress = new JTextArea(0, 0);
 		txtAddress.setEnabled(true);
 		txtAddress.setLineWrap(true);
 		txtAddress.setWrapStyleWord(true);
 		txtAddress.setText(address);
 		txtAddress.setDisabledTextColor(new Color(128, 128, 128));
+		txtAddress.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				btnUpdate.setEnabled(true);
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				if (txtAddress.getText().isEmpty()) {
+					btnUpdate.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// Not used for plain text documents
+			}
+		});
 
 		txtPhoneNo = new JTextField(20);
 		txtPhoneNo.setEnabled(true);
 		txtPhoneNo.setText(phone);
 		txtPhoneNo.setDisabledTextColor(new Color(128, 128, 128));
+		txtPhoneNo.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				btnUpdate.setEnabled(true);
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				if (txtPhoneNo.getText().isEmpty()) {
+					btnUpdate.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// Not used for plain text documents
+			}
+		});
+		btnUpdate.addActionListener(new ActionListener() {
+			
+			@Override
+		    public void actionPerformed(ActionEvent evt) {                                           
+		        String newAddress = txtAddress.getText();
+		        String newPhone = txtPhoneNo.getText();
+		        
+		        if( newAddress.equals("") || newPhone.equals("")) {
+		            JOptionPane.showMessageDialog(null, "Please fill up all fields.");
+		        } else if (!Helper.isValidPhoneNumber(newPhone)) {
+		            JOptionPane.showMessageDialog(null, "Please enter a valid phone number.");
+		        } else {
+		            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to update your details?", "Confirmation", JOptionPane.YES_NO_OPTION);
+		            if(option == JOptionPane.YES_OPTION) {
+		                try {
+		                    Helper.updateEmployeeDetails(uid, newAddress, newPhone);
+		                    JOptionPane.showMessageDialog(null, "Employee details updated successfully.");
+		                    btnUpdate.setEnabled(false);
+		                } catch (IOException ex) {
+		                    JOptionPane.showMessageDialog(null, "Error updating employee details: " + ex.getMessage());
+		                } catch (CsvException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		            } else {
+		                // do nothing
+		            }
+		        }        
+		    }
+		});
 
 		txtSssNo = new JTextField(20);
 		txtSssNo.setEditable(false);
@@ -216,6 +295,12 @@ public class JpEmployee extends JFrame {
 		getContentPane().add(personalInfoPanel);
 
 		JButton btnPayslip = new JButton("Payslip");
+		btnPayslip.addActionListener((ActionEvent e) -> {
+				setVisible(false);
+				dispose();
+				JpEmpPayslip payslip = new JpEmpPayslip(uid);
+				payslip.setVisible(true);
+		});
 		btnPayslip.setBounds(481, 169, 89, 23);
 		personalInfoPanel.add(btnPayslip);
 
@@ -226,10 +311,6 @@ public class JpEmployee extends JFrame {
 		JButton btnNewButton = new JButton("Leaves");
 		btnNewButton.setBounds(481, 230, 89, 21);
 		personalInfoPanel.add(btnNewButton);
-
-		JButton btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(150, 270, 89, 30);
-		personalInfoPanel.add(btnUpdate);
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setToolTipText("View");

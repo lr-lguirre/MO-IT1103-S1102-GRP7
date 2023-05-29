@@ -1,13 +1,19 @@
 package moit103s1102g7.prototype;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import com.opencsv.exceptions.CsvException;
 
 public class Helper {
 	static List<employeeDetails> employeeDetails = readCsvFiles.employeeDetails();
@@ -78,7 +84,24 @@ public class Helper {
 	        empInfo.put("empPhoneAllowance", e.getEmpPhoneAllowance());
 	        empInfo.put("empClothing", e.getEmpClothing());
 	        empInfo.put("empSemi", e.getEmpSemi());
+	        empInfo.put("empRate", e.getEmpRate());
 	    });
 	    return empInfo;
 	}
+	public static void updateEmployeeDetails(String uid, String newAddress, String newPhone) throws IOException, CsvException {
+	    List<employeeDetails> employeeDetails = readCsvFiles.employeeDetails();
+	    for (employeeDetails emp : employeeDetails) {
+	        if (emp.getEmpid().equals(uid)) {
+	            emp.setEmpAddress(newAddress);
+	            emp.setEmpPhone(newPhone);
+	            break;
+	        }
+	    }
+	    writeCsvFiles.empDetails(employeeDetails);
+	}
+	 public static boolean isValidPhoneNumber(String phoneNo) {
+	        Pattern pattern = Pattern.compile("^\\+?[0-9. ()-]{10,25}$");
+	        Matcher matcher = pattern.matcher(phoneNo);
+	        return matcher.matches();
+	 }
 }

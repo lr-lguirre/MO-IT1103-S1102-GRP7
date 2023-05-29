@@ -21,7 +21,7 @@ public class JpPayrollSystem extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JpEmployee jpEmployee;
-	private HoursWorked hoursWorked;
+	private JpHoursWorked jpHoursWorked;
 	private PrintNReadTxt printNRead;
 	private JpEmpPayslip jpEmpPayslip;
 	// private variables for the Swing components
@@ -30,7 +30,7 @@ public class JpPayrollSystem extends JFrame {
 	public JpPayrollSystem(String uid) { // Constructor
 		// Initialize objects
 		jpEmployee = new JpEmployee(uid);
-		hoursWorked = new HoursWorked();
+		jpHoursWorked = new JpHoursWorked();
 		printNRead = new PrintNReadTxt();
 		jpEmpPayslip = new JpEmpPayslip(uid);
 		// Initialize the profile panel

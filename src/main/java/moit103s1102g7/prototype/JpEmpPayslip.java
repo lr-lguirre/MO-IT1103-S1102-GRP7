@@ -9,6 +9,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -57,7 +58,7 @@ public class JpEmpPayslip extends JFrame {
 	
 	protected String[] payPeriod = {"======= Pay Period =======",
 								  "1st Week September 2022"}; // For JComboBox use
-	private HoursWorked hrsWkd;
+	private JpHoursWorked hrsWkd;
 	
 	private PrintNReadTxt printRead;
 	protected double[] allEmpRate;
@@ -71,7 +72,29 @@ public class JpEmpPayslip extends JFrame {
 	 * Create the frame.
 	 */
 	public JpEmpPayslip(String uid) {
-		hrsWkd = new HoursWorked();
+		Helper helper = new Helper();
+		Map<String, Object> empinfo = helper.employeeInfo(uid);
+		String fname = (String) empinfo.get("empFName");
+		String lname = (String) empinfo.get("empLname");
+		String birthday = (String) empinfo.get("empBdate");
+		String address = (String) empinfo.get("empAddress");
+		String phone = (String) empinfo.get("empPhone");
+		String sss = (String) empinfo.get("empSSS");
+		String philhealth = (String) empinfo.get("empPhilhealth");
+		String tin = (String) empinfo.get("empTIN");
+		String pagibig = (String) empinfo.get("empPagibig");
+		String position = (String) empinfo.get("empPosition");
+		String supervisor = (String) empinfo.get("empSupervisor");
+		String status = (String) empinfo.get("empStatus");
+		String clothing = (String) empinfo.get("empClothing");
+		String rice = (String) empinfo.get("empRice");
+		String phoneAllowance = (String) empinfo.get("empPhoneAllowance");
+ 		String rate = (String) empinfo.get("empRate");
+		String salary = (String) empinfo.get("empSalary");
+		String semi = (String) empinfo.get("empSemi");
+		
+		
+		hrsWkd = new JpHoursWorked();
 		printRead = new PrintNReadTxt();
 		printRead.printRead();
 		allEmpRate = printRead.getAllEmpRate();
@@ -226,6 +249,7 @@ public class JpEmpPayslip extends JFrame {
 		txtEmployeeNo.setEnabled(false);
 		txtEmployeeNo.setColumns(10);
 		txtEmployeeNo.setBounds(376, 26, 144, 20);
+		txtEmployeeNo.setText(uid);
 		payrollInformationPanel.add(txtEmployeeNo);
 		
 		JLabel lblEmployeeNo = new JLabel("Employee No.:");
@@ -260,6 +284,7 @@ public class JpEmpPayslip extends JFrame {
 		txtTIN.setEnabled(false);
 		txtTIN.setColumns(10);
 		txtTIN.setBounds(116, 26, 144, 20);
+		txtTIN.setText(tin);
 		employeeInformationPanel.add(txtTIN);
 		
 		txtPhicNo = new JTextField();
@@ -267,6 +292,7 @@ public class JpEmpPayslip extends JFrame {
 		txtPhicNo.setEnabled(false);
 		txtPhicNo.setColumns(10);
 		txtPhicNo.setBounds(116, 51, 144, 20);
+		txtPhicNo.setText(philhealth);
 		employeeInformationPanel.add(txtPhicNo);
 		
 		txtHdmfNo = new JTextField();
@@ -274,13 +300,14 @@ public class JpEmpPayslip extends JFrame {
 		txtHdmfNo.setEnabled(false);
 		txtHdmfNo.setColumns(10);
 		txtHdmfNo.setBounds(376, 51, 144, 20);
-		employeeInformationPanel.add(txtHdmfNo);
+		txtHdmfNo.setText(pagibig);		employeeInformationPanel.add(txtHdmfNo);
 		
 		txtSssNo = new JTextField();
 		txtSssNo.setDisabledTextColor(new Color(128, 128, 128));
 		txtSssNo.setEnabled(false);
 		txtSssNo.setColumns(10);
 		txtSssNo.setBounds(376, 26, 144, 20);
+		txtSssNo.setText(sss);
 		employeeInformationPanel.add(txtSssNo);
 		
 		JLabel lblSssNo = new JLabel("SSS No.:");
@@ -300,6 +327,7 @@ public class JpEmpPayslip extends JFrame {
 		txtPosition.setEnabled(false);
 		txtPosition.setColumns(10);
 		txtPosition.setBounds(116, 76, 144, 20);
+		txtPosition.setText(position);
 		employeeInformationPanel.add(txtPosition);
 		
 		txtHourlyRate = new JTextField();
@@ -307,6 +335,7 @@ public class JpEmpPayslip extends JFrame {
 		txtHourlyRate.setEnabled(false);
 		txtHourlyRate.setColumns(10);
 		txtHourlyRate.setBounds(376, 76, 144, 20);
+		txtHourlyRate.setText(rate);
 		employeeInformationPanel.add(txtHourlyRate);
 		
 		JLabel lblHourlyRate = new JLabel("Hourly Rate:");
@@ -349,6 +378,7 @@ public class JpEmpPayslip extends JFrame {
 		txtBasicPay.setEnabled(false);
 		txtBasicPay.setColumns(10);
 		txtBasicPay.setBounds(158, 52, 102, 20);
+		txtBasicPay.setText(rate);
 		employeeEarningsPanel.add(txtBasicPay);
 		
 		txtRiceSubsidy = new JTextField();
@@ -356,6 +386,7 @@ public class JpEmpPayslip extends JFrame {
 		txtRiceSubsidy.setEnabled(false);
 		txtRiceSubsidy.setColumns(10);
 		txtRiceSubsidy.setBounds(398, 52, 122, 20);
+		txtRiceSubsidy.setText(rice);
 		employeeEarningsPanel.add(txtRiceSubsidy);
 		
 		JLabel lblNonTaxableEarnings = new JLabel("Non-Taxable Earnings:");
@@ -372,6 +403,7 @@ public class JpEmpPayslip extends JFrame {
 		txtPhoneSubsidy.setEnabled(false);
 		txtPhoneSubsidy.setColumns(10);
 		txtPhoneSubsidy.setBounds(398, 76, 122, 20);
+		txtPhoneSubsidy.setText(phoneAllowance);
 		employeeEarningsPanel.add(txtPhoneSubsidy);
 		
 		JLabel lblPhoneSubsidy = new JLabel("Phone Subsidy:");
@@ -387,6 +419,7 @@ public class JpEmpPayslip extends JFrame {
 		txtClothingAllowance.setEnabled(false);
 		txtClothingAllowance.setColumns(10);
 		txtClothingAllowance.setBounds(398, 100, 122, 20);
+		txtClothingAllowance.setText(clothing);
 		employeeEarningsPanel.add(txtClothingAllowance);
 		
 		JLabel lblTotalNonTaxable = new JLabel("TOTAL NON-TAXABLE:");
@@ -400,6 +433,8 @@ public class JpEmpPayslip extends JFrame {
 		txtTotalNonTaxable.setEnabled(false);
 		txtTotalNonTaxable.setColumns(10);
 		txtTotalNonTaxable.setBounds(398, 124, 122, 20);
+		Long allowance = Long.parseLong(clothing) + Long.parseLong(phoneAllowance) + Long.parseLong(rice);
+		txtTotalNonTaxable.setText(Long.toString(allowance));
 		employeeEarningsPanel.add(txtTotalNonTaxable);
 		
 		JLabel lblTotalTaxable = new JLabel("TOTAL TAXABLE:");
@@ -508,6 +543,7 @@ public class JpEmpPayslip extends JFrame {
 		txtBasicPayHrs.setEnabled(false);
 		txtBasicPayHrs.setColumns(10);
 		txtBasicPayHrs.setBounds(76, 52, 43, 20);
+		txtBasicPayHrs.setText("8");
 		employeeEarningsPanel.add(txtBasicPayHrs);
 		
 		JLabel lblHrs = new JLabel("hr(s):");

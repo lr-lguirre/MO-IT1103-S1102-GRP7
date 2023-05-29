@@ -26,7 +26,7 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-public class HoursWorked extends JFrame {
+public class JpHoursWorked extends JFrame {
 
 	/**
 	 * 
@@ -58,7 +58,7 @@ public class HoursWorked extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HoursWorked frame = new HoursWorked();
+					JpHoursWorked frame = new JpHoursWorked();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -70,7 +70,7 @@ public class HoursWorked extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public HoursWorked() {
+	public JpHoursWorked() {
 		printNRead = new PrintNReadTxt();
 		printNRead.printRead();
 		double[] empHrsWkd = printNRead.getEmpHrsWkd();
