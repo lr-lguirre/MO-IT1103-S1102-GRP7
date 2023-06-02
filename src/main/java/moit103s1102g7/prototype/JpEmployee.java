@@ -308,9 +308,16 @@ public class JpEmployee extends JFrame {
 		btnAttendance.setBounds(481, 199, 89, 23);
 		personalInfoPanel.add(btnAttendance);
 
-		JButton btnNewButton = new JButton("Leaves");
-		btnNewButton.setBounds(481, 230, 89, 21);
-		personalInfoPanel.add(btnNewButton);
+		JButton btnLeaves = new JButton("Leaves");
+		btnLeaves.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JpLeaveApplication leaves = new JpLeaveApplication(uid);
+				leaves.setVisible(true);
+				dispose();
+			}
+		});
+		btnLeaves.setBounds(481, 230, 89, 21);
+		personalInfoPanel.add(btnLeaves);
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setToolTipText("View");

@@ -10,7 +10,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import com.opencsv.CSVReader;
 import java.io.File;
 import java.io.FileReader;
-
+import java.io.StringWriter;
 
 public class writeCsvFiles {
 	    
@@ -84,5 +84,38 @@ public class writeCsvFiles {
 	    writer.writeAll(records);
 	    writer.close();
 	}
+
+	public static void updateLeaves(List<employeeLeaves> leavesList) throws Exception {
+		CSVReader reader = new CSVReader(new FileReader("leaves.csv"));
+	    String[] headers = reader.readNext();
+	    reader.close();
+	    List<String[]> newRecords = new ArrayList<>();
+	    if (headers != null) {
+            newRecords.add(headers);
+        }
+	    for (employeeLeaves emp : leavesList) {
+	        newRecords.add(new String[] { emp.getEmpid(), emp.getLeaveType(), emp.getDateFrom(), emp.getDateTo(),
+	                emp.getAvailableVL(), emp.getAvailableSL(), emp.getAvailableEL(), emp.getLeaveDescription(),
+	                emp.getLeaveStatus() });
+	    }
+
+	    // Create a new StringWriter to store the modified contents
+	    StringWriter writer = new StringWriter();
+
+	    // Write the existing records (including the header) to the StringWriter
+	    CSVWriter csvWriter = new CSVWriter(writer);
+	   
+	    // csvWriter.writeAll(existingRecords);
+
+	    // Write the new records to the StringWriter
+	    csvWriter.writeAll(newRecords);
+	    csvWriter.close();
+
+	    // Write the modified contents back to the CSV file
+	    FileWriter fileWriter = new FileWriter("leaves.csv");
+	    fileWriter.write(writer.toString());
+	    fileWriter.close();
+	}
+
 }
 	

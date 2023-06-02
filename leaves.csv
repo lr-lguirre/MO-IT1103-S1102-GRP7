@@ -1,1 +1,5 @@
-﻿empid,leaveType,leaveDate,leaveDays
+"empId","leaveType","dateFrom","dateTo","availabeVL","availableSL","availableEL","leaveDescription","leaveStatus"
+"10001","VL","12/13/2023","12/15/2023",,"5","5","Test","Applied"
+"10001","SL","12/16/2023","12/16/2023",,"3","5","Test","Approved"
+"10002","SL","12/12/2023","12/13/2023",,"4","5","Test","Approved"
+"10001","SL","06/19/2023","06/28/2023","10001","10001","10001","Over","Applied"

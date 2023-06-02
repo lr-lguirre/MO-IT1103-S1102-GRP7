@@ -1,348 +1,404 @@
 package moit103s1102g7.prototype;
 
 import java.awt.EventQueue;
-
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.text.SimpleDateFormat;
-
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import java.awt.Color;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+
 import java.awt.Insets;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
-import java.awt.Dimension;
 import com.toedter.calendar.JDateChooser;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
-import java.nio.file.Files;
 
 public class JpLeaveApplication extends JFrame {
 
-	String path = "leaves.csv";
-	String line = "";
-	SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd yyyy");
-	
-	private static final long serialVersionUID = 1L;
-	// private UserLogin login = new UserLogin();
-	private JTable table;
-	private JComboBox<Object> comboBoxLeaveType;
-	private JDateChooser txtStartDate;
-	private JDateChooser txtEndDate;
-	private String newLeaveDetails[] = new String[6];
-	private LeaveDetails[] leave = new LeaveDetails[50];
-	private int SlCount;
-	private int VlCount;
-	private int ElCount;
-	private int leaveCount;
-	private int count;
-	private String employeeNumber;
-	private JTextArea txtLeaveDescription;
-	private Object[][] data;
-	private JButton btnDelete;
-	private JButton btnCancel_1;
-	private LeaveDetails deletedLeave;
-	/**
-	 * Launch the application.
-	 */
-	public static void leaves(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			private String uid;
+	private static final String path = "leaves.csv";
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+    private static final long serialVersionUID = 1L;
+    private JComboBox<Object> comboBoxLeaveType;
+    private JDateChooser txtStartDate;
+    private JDateChooser txtEndDate;
+    private List<employeeLeaves> leavesList = readCsvFiles.employeeLeaves();
+    private JTextArea txtLeaveDescription;
+    private JButton btnCancel_1;
+    private DefaultTableModel model;
+    /**
+     * Create the frame.
+     */
+    public JpLeaveApplication(String uid) {
 
-			public void run() {
-				try {
-					JpLeaveApplication frame = new JpLeaveApplication(uid);
-					// frame.readCsvFiles();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	/*
-	 * public void applyLeave() { // System.out.println(login.getEmployeeNumber());
-	 * readCsvFiles(); setVisible(true); }
-	 */
-	
-	/*
-	 * public void readCsvFiles() { count = 0; leaveCount = 0;
-	 * 
-	 * int i = 0; try (BufferedReader br = Files.newBufferedReader(Paths.get(path),
-	 * Charset.defaultCharset())) { while ((line = br.readLine()) != null) {
-	 * 
-	 * String[] values = line.split(",");
-	 * 
-	 * // check if any value is empty or null boolean hasEmptyValue = false; for
-	 * (String value : values) { if (value == null || value.isEmpty()) {
-	 * hasEmptyValue = true; break;} } if (hasEmptyValue) { // skip this line
-	 * continue; } leave[i] = new LeaveDetails(values[0], values[1], values[2],
-	 * values[3], values[4], values[5]); count++; i++; } } catch (IOException e) {
-	 * e.printStackTrace(); }
-	 * 
-	 * Object login; for (LeaveDetails aLeave : leave) { if (aLeave != null &&
-	 * aLeave.employeeNumber.equals(((Object) login).getEmployeeNumber())) {
-	 * leaveCount++; if (aLeave.leaveType.equals("Sick Leave") &&
-	 * !"Cancelled".equals(aLeave.leaveStatus)) { SlCount++; } else if
-	 * (aLeave.leaveType.equals("Vacation Leave") &&
-	 * !"Cancelled".equals(aLeave.leaveStatus)) { VlCount++; } else if
-	 * (aLeave.leaveType.equals("Emergency Leave") &&
-	 * !"Cancelled".equals(aLeave.leaveStatus)) { ElCount++; } } }
-	 * System.out.println("Leave Count: " + leaveCount + "\n" + "Sick Leaves: " +
-	 * SlCount + "\n" + "Vacation Leaves: " + VlCount + "\n" + "Emergency Leaves: "
-	 * + ElCount + "\n"); //Populate JTable with data data = new
-	 * Object[leaveCount][5];
-	 * 
-	 * 
-	 * int counter = 0; for (int j = leave.length - 1; j >= 0; j--) { if (leave[j]
-	 * != null && leave[j].employeeNumber.equals(login.getEmployeeNumber())) {
-	 * data[counter][0] = leave[j].leaveType; data[counter][1] = leave[j].startDate;
-	 * data[counter][2] = leave[j].endDate; data[counter][3] = leave[j].leaveStatus;
-	 * data[counter][4] = leave[j].leaveDescription; counter++; } }
-	 * table.setModel(new DefaultTableModel( Arrays.copyOfRange(data, 0, counter),
-	 * new String[] { "Leave Type", "Start Date", "End Date", "Leave Status",
-	 * "Leave Description" } ));
-	 * 
-	 * table.getColumnModel().getColumn(4).setPreferredWidth(84); }
-	 */
-
-	/**
-	 * Create the frame.
-	 */
-	public JpLeaveApplication(String uid) {
 
 		setTitle("MotorPH Employee Leave");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(600,419);
-		setLocationRelativeTo(null);
-		getContentPane().setLayout(null);
-		
-		JLabel lblLeaveApplication = new JLabel("Employee Leave Application");
-		lblLeaveApplication.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLeaveApplication.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblLeaveApplication.setBounds(192, 24, 225, 17);
-		getContentPane().add(lblLeaveApplication);
-		
-		JButton btnBack = new JButton("Back");
-		btnBack.setBounds(496, 338, 64, 23);
-		btnBack.addActionListener(new ActionListener() {
-			
-			private String uid;
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 419);
+        setLocationRelativeTo(null);
+        getContentPane().setLayout(null);
 
+        JLabel lblLeaveApplication = new JLabel("Employee Leave Application");
+        lblLeaveApplication.setHorizontalAlignment(SwingConstants.CENTER);
+        lblLeaveApplication.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblLeaveApplication.setBounds(192, 24, 225, 17);
+        getContentPane().add(lblLeaveApplication);
+
+        JButton btnBack = new JButton("Back");
+        btnBack.setBounds(510, 335, 64, 23);
+        btnBack.addActionListener(new ActionListener() {
+        	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-	        	dispose();
-	        	JpPayrollSystem menu = new JpPayrollSystem(uid);
-	        	menu.profileMenu();
-				
+				JpEmployee employee = new JpEmployee(uid);
+				employee.setVisible(true);
+				dispose();				
 			}
-		});
-		getContentPane().add(btnBack);
-		
-		JPanel payrollInformationPanel_1 = new JPanel();
-		payrollInformationPanel_1.setLayout(null);
-		payrollInformationPanel_1.setBorder(new LineBorder(new Color(192, 192, 192), 1, true));
-		payrollInformationPanel_1.setBounds(10, 51, 564, 143);
-		getContentPane().add(payrollInformationPanel_1);
-		
-		JLabel lblAddNewLeave = new JLabel("Add New Leave:");
-		lblAddNewLeave.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAddNewLeave.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblAddNewLeave.setBounds(185, 6, 193, 14);
-		payrollInformationPanel_1.add(lblAddNewLeave);
-		
-		JLabel lblLeaveType = new JLabel("Leave Type:");
-		lblLeaveType.setBounds(10, 29, 102, 14);
-		payrollInformationPanel_1.add(lblLeaveType);
-		
-		JLabel lblStartDate = new JLabel("Start Date:");
-		lblStartDate.setBounds(10, 54, 84, 14);
-		payrollInformationPanel_1.add(lblStartDate);
-		
-		comboBoxLeaveType = new JComboBox<Object>(new Object[]{});
-		comboBoxLeaveType.setModel(new DefaultComboBoxModel<Object>(new String[] {"Select Leave Type ", "Sick Leave", "Vacation Leave", "Emergency Leave"}));
-		comboBoxLeaveType.setBounds(89, 25, 136, 20);
-		payrollInformationPanel_1.add(comboBoxLeaveType);
-		
-		JLabel lblEndDate = new JLabel("End Date:");
-		lblEndDate.setBounds(10, 79, 84, 14);
-		payrollInformationPanel_1.add(lblEndDate);
-		
-		JLabel lblReasonForLeave = new JLabel("Reason for ");
-		lblReasonForLeave.setBounds(235, 29, 90, 14);
-		payrollInformationPanel_1.add(lblReasonForLeave);
-		
-		txtLeaveDescription = new JTextArea();
-		txtLeaveDescription.setMargin(new Insets(4, 4, 4, 4));
-		txtLeaveDescription.setBorder(new LineBorder(new Color(128, 128, 128)));
-		txtLeaveDescription.setLineWrap(true);
-		txtLeaveDescription.setWrapStyleWord(true);
-		txtLeaveDescription.setBounds(316, 25, 238, 71);
-		txtLeaveDescription.setToolTipText("A leave descrption can't contain a coma.");
-		txtLeaveDescription.addKeyListener(new KeyAdapter() {
-		    @Override
-		    public void keyTyped(KeyEvent e) {
-		        if (e.getKeyChar() == KeyEvent.VK_COMMA) {
-		            e.consume(); // consume the key event to prevent the comma from being entered
-		        }
-		    }
-		});
-		payrollInformationPanel_1.add(txtLeaveDescription);
-		
-		JButton btnApplyLeave = new JButton("File Leave");
-		btnApplyLeave.setBounds(290, 107, 104, 23);
-		
-		
-		payrollInformationPanel_1.add(btnApplyLeave);
-		
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(176, 107, 104, 23);
-		btnCancel.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// clearFields();
-				
-			}
-		});
-		payrollInformationPanel_1.add(btnCancel);
-		
-		JLabel lblLeave = new JLabel("Leave:");
-		lblLeave.setBounds(235, 47, 90, 14);
-		payrollInformationPanel_1.add(lblLeave);
-		
-		txtStartDate = new JDateChooser();
-		txtStartDate.setDateFormatString("MMMM dd yyyy");
-		txtStartDate.setBounds(89, 50, 136, 20);
-		payrollInformationPanel_1.add(txtStartDate);
-		
-		txtEndDate = new JDateChooser();
-		txtEndDate.setDateFormatString("MMMM dd yyyy");
-		txtEndDate.setBounds(89, 76, 136, 20);
-		payrollInformationPanel_1.add(txtEndDate);
-		
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setFont(new Font("Tahoma", Font.BOLD, 11));
-		scrollPane.setBounds(10, 217, 564, 107);
-		getContentPane().add(scrollPane);
-		
-		table = new JTable();
-		table.setDefaultEditor(Object.class, null);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-		    public void valueChanged(ListSelectionEvent event) {
-		        int selectedRow = table.getSelectedRow();
-		        if (selectedRow != -1) { // If a row is selected
-		            String leaveStatus = (String) table.getValueAt(selectedRow, 3);
-		            if (leaveStatus.equals("Applied")) {
-		                btnCancel_1.setEnabled(true);
-		            } else {
-		                btnCancel_1.setEnabled(false);
-		            }
-		            btnDelete.setEnabled(true);
-		        } else {
-		            btnDelete.setEnabled(false);
-		        }
-		    }
-		});
+        });
+        getContentPane().add(btnBack);
 
-		scrollPane.setViewportView(table);
+        JPanel payrollInformationPanel_1 = new JPanel();
+        payrollInformationPanel_1.setLayout(null);
+        payrollInformationPanel_1.setBorder(new LineBorder(new Color(192, 192, 192), 1, true));
+        payrollInformationPanel_1.setBounds(10, 51, 564, 143);
+        getContentPane().add(payrollInformationPanel_1);
 
-		JLabel lblFiledLeaves = new JLabel("Filed Leaves:");
-		lblFiledLeaves.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFiledLeaves.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblFiledLeaves.setBounds(195, 199, 193, 14);
-		getContentPane().add(lblFiledLeaves);
-		
-		btnDelete = new JButton("Delete");
-		btnDelete.setBounds(20, 338, 72, 23);
-		btnDelete.setEnabled(false);
-		btnDelete.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this leave record?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-				if (confirm == JOptionPane.YES_OPTION) {
-				// get the selected row index
-				int rowIndex = table.getSelectedRow();
-				// open the CSV file for writing
-				try {
-				BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+        JLabel lblAddNewLeave = new JLabel("Add New Leave:");
+        lblAddNewLeave.setHorizontalAlignment(SwingConstants.CENTER);
+        lblAddNewLeave.setFont(new Font("Tahoma", Font.BOLD, 11));
+        lblAddNewLeave.setBounds(185, 6, 193, 14);
+        payrollInformationPanel_1.add(lblAddNewLeave);
 
-				// loop through the leave array and write to the CSV file
-				for (LeaveDetails leaveDetail : leave) {
-				    // check if leaveDetail is not null
-				    if (leaveDetail != null) {
-				        // check if this is not the row that was deleted
-				        if (!leaveDetail.leaveType.equals(table.getValueAt(rowIndex, 0)) ||
-				                !leaveDetail.startDate.equals(table.getValueAt(rowIndex, 1)) ||
-				                !leaveDetail.endDate.equals(table.getValueAt(rowIndex, 2)) ||
-				                !leaveDetail.leaveStatus.equals(table.getValueAt(rowIndex, 3)) ||
-				                !leaveDetail.leaveDescription.equals(table.getValueAt(rowIndex, 4))) {
-				            // write the leave detail to the CSV file
-				            writer.write(leaveDetail.employeeNumber + "," +
-				            			  leaveDetail.leaveType + "," +
-				                          leaveDetail.startDate + "," +
-				                          leaveDetail.endDate + "," +
-				                          leaveDetail.leaveStatus + "," +
-				                          leaveDetail.leaveDescription);
-				            writer.newLine();
-				        }
-				    }
-				}
+        JLabel lblLeaveType = new JLabel("Leave Type:");
+        lblLeaveType.setBounds(10, 29, 102, 14);
+        payrollInformationPanel_1.add(lblLeaveType);
 
-				// close the CSV file
-				writer.close();
-				} catch (FileNotFoundException ex) {
-			        ex.printStackTrace();
-			    } catch (IOException ex) {
-					ex.printStackTrace();
-				}
-				
+        JLabel lblStartDate = new JLabel("Start Date:");
+        lblStartDate.setBounds(10, 54, 84, 14);
+        payrollInformationPanel_1.add(lblStartDate);
 
-				// LeavePageRedirector redirector = new LeavePageRedirector();
-				// redirector.redirect();
-				// setVisible(false);
-				// dispose();
-				}
-			}
-		});
-	}
+        comboBoxLeaveType = new JComboBox<Object>(new Object[] {});
+        comboBoxLeaveType.setModel(new DefaultComboBoxModel<Object>(
+                new String[] { "Select Leave Type ", "SL", "VL", "EL" }));
+        comboBoxLeaveType.setBounds(89, 25, 136, 20);
+        payrollInformationPanel_1.add(comboBoxLeaveType);
+
+        JLabel lblEndDate = new JLabel("End Date:");
+        lblEndDate.setBounds(10, 79, 84, 14);
+        payrollInformationPanel_1.add(lblEndDate);
+
+        JLabel lblReasonForLeave = new JLabel("Reason for ");
+        lblReasonForLeave.setBounds(235, 29, 90, 14);
+        payrollInformationPanel_1.add(lblReasonForLeave);
+
+        txtLeaveDescription = new JTextArea();
+        txtLeaveDescription.setMargin(new Insets(4, 4, 4, 4));
+        txtLeaveDescription.setBorder(new LineBorder(new Color(128, 128, 128)));
+        txtLeaveDescription.setLineWrap(true);
+        txtLeaveDescription.setWrapStyleWord(true);
+        txtLeaveDescription.setBounds(316, 25, 238, 71);
+        txtLeaveDescription.setToolTipText("A leave description can't contain a comma.");
+        txtLeaveDescription.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyChar() == KeyEvent.VK_COMMA) {
+                    e.consume(); // consume the key event to prevent the comma from being entered
+                }
+            }
+        });
+        payrollInformationPanel_1.add(txtLeaveDescription);
+
+        JButton btnApplyLeave = new JButton("File Leave");
+        btnApplyLeave.setBounds(450, 107, 104, 23);
+        payrollInformationPanel_1.add(btnApplyLeave);
+
+        JButton btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(316, 107, 104, 23);
+        btnCancel.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // clearFields();
+
+            }
+        });
+        payrollInformationPanel_1.add(btnCancel);
+
+        JLabel lblLeave = new JLabel("Leave:");
+        lblLeave.setBounds(235, 47, 90, 14);
+        payrollInformationPanel_1.add(lblLeave);
+
+        txtStartDate = new JDateChooser();
+        txtStartDate.setDateFormatString("MMMM dd yyyy");
+        txtStartDate.setBounds(89, 50, 136, 20);
+        payrollInformationPanel_1.add(txtStartDate);
+
+        txtEndDate = new JDateChooser();
+        txtEndDate.setDateFormatString("MMMM dd yyyy");
+        txtEndDate.setBounds(89, 76, 136, 20);
+        payrollInformationPanel_1.add(txtEndDate);
+        
+        JLabel lblVL = new JLabel("VL:");
+        lblVL.setFont(new Font("Dialog", Font.BOLD, 12));
+        lblVL.setBounds(10, 115, 29, 16);
+        payrollInformationPanel_1.add(lblVL);
+        
+        JLabel txtVL = new JLabel("");
+        txtVL.setBounds(38, 114, 38, 16);
+        payrollInformationPanel_1.add(txtVL);
+        
+        JLabel txtSL = new JLabel("");
+        txtSL.setBounds(117, 113, 38, 16);
+        payrollInformationPanel_1.add(txtSL);
+        
+        JLabel lblSL = new JLabel("SL:");
+        lblSL.setFont(new Font("Dialog", Font.BOLD, 12));
+        lblSL.setBounds(89, 114, 29, 16);
+        payrollInformationPanel_1.add(lblSL);
+        
+        JLabel txtVL_2 = new JLabel("");
+        txtVL_2.setBounds(213, 114, 38, 16);
+        payrollInformationPanel_1.add(txtVL_2);
+        
+        JLabel lblEL = new JLabel("EL:");
+        lblEL.setFont(new Font("Dialog", Font.BOLD, 12));
+        lblEL.setBounds(185, 115, 29, 16);
+        payrollInformationPanel_1.add(lblEL);
+
+     // Create a filtered list based on uid
+        
+        for (employeeLeaves leaveDetail : leavesList) {
+            System.out.println(leaveDetail);
+        }
+        List<employeeLeaves> filteredList = new ArrayList<>();
+        System.out.println(uid);
+        System.out.println(leavesList);
+        for (employeeLeaves leaves : leavesList) {
+            String empid = leaves.getEmpid();
+            System.out.println(empid);
+            if (empid != null && empid.equals(uid)) {
+                filteredList.add(leaves);
+            }
+        }
+
+        // Create a table model and set it to the JTable
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("empid");
+        model.addColumn("leaveType");
+        model.addColumn("dateFrom");
+        model.addColumn("dateTo");
+        model.addColumn("availabeVL");
+        model.addColumn("availableSL");
+        model.addColumn("availableEL");
+        model.addColumn("leaveDescription");
+        model.addColumn("leaveStatus");
+
+        for (employeeLeaves leaves : filteredList) {
+            model.addRow(new Object[] {
+                leaves.getEmpid(),
+                leaves.getLeaveType(),
+                leaves.getDateFrom(),
+                leaves.getDateTo(),
+                leaves.getAvailableVL(),
+                leaves.getAvailableSL(),
+                leaves.getAvailableEL(),
+                leaves.getLeaveDescription(),
+                leaves.getLeaveStatus()
+            });
+        }
+
+        JTable tblLeaves = new JTable(model);        
+        JScrollPane scrollPane = new JScrollPane(tblLeaves);
+        scrollPane.setFont(new Font("Tahoma", Font.BOLD, 11));
+        scrollPane.setBounds(10, 217, 564, 107);
+        tblLeaves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        scrollPane.setViewportView(tblLeaves);
+        getContentPane().add(scrollPane);
+        
+        
+
+        JLabel lblFiledLeaves = new JLabel("Filed Leaves:");
+        lblFiledLeaves.setHorizontalAlignment(SwingConstants.CENTER);
+        lblFiledLeaves.setFont(new Font("Tahoma", Font.BOLD, 11));
+        lblFiledLeaves.setBounds(195, 199, 193, 14);
+        getContentPane().add(lblFiledLeaves);
+
+        btnCancel_1 = new JButton("Cancel");
+        btnCancel_1.setBounds(10, 338, 72, 23);
+        btnCancel_1.setEnabled(false);
+        btnCancel_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                // get the selected row index
+                int rowIndex = tblLeaves.getSelectedRow();
+                // update the leave status to "Cancelled"
+                tblLeaves.setValueAt("Cancelled", rowIndex, 8);
+                // open the CSV file for writing
+                try {
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+
+                    // loop through the leave array and write to the CSV file
+                    for (employeeLeaves leaveDetail : leavesList) {
+                        // check if leaveDetail is not null
+                        if (leaveDetail != null) {
+                            // write the leave detail to the CSV file
+                            writer.write(leaveDetail.getEmpid() + "," + leaveDetail.getLeaveType() + ","
+                                    + leaveDetail.getDateFrom() + "," + leaveDetail.getDateTo() + ","
+                                    + leaveDetail.getAvailableVL() + "," + leaveDetail.getAvailableSL() + "," + leaveDetail.getAvailableEL() + ","
+                                    + leaveDetail.getLeaveDescription() + "," + leaveDetail.getLeaveStatus());
+                            writer.newLine();
+                        }
+                    }
+
+                    // close the CSV file
+                    writer.close();
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        getContentPane().add(btnCancel_1);
+
+        // Load leave data from CSV file
+        // loadLeaveData(uid);
+
+        btnApplyLeave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // get the selected leave type
+                String leaveType = (String) comboBoxLeaveType.getSelectedItem();
+                // get the start date
+                Date startDate = txtStartDate.getDate();
+                // get the end date
+                Date endDate = txtEndDate.getDate();
+                // get the leave description
+                String leaveDescription = txtLeaveDescription.getText();
+
+                // validate the leave application
+                if (leaveType.equals("Select Leave Type ")) {
+                    JOptionPane.showMessageDialog(null, "Please select a leave type.", "Invalid Leave Type",
+                            JOptionPane.WARNING_MESSAGE);
+                } else if (startDate == null || endDate == null) {
+                    JOptionPane.showMessageDialog(null, "Please select start and end dates.", "Invalid Dates",
+                            JOptionPane.WARNING_MESSAGE);
+                } else if (startDate.after(endDate)) {
+                    JOptionPane.showMessageDialog(null, "Start date cannot be after end date.", "Invalid Dates",
+                            JOptionPane.WARNING_MESSAGE);
+                } else if (leaveDescription.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please enter a leave description.", "Invalid Description",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    // create a new leave detail object
+                    employeeLeaves leaveDetail = new employeeLeaves();
+                    leaveDetail.setEmpid(uid);
+                    leaveDetail.setLeaveType(leaveType);
+                    leaveDetail.setDateFrom(formatter.format(startDate));
+                    leaveDetail.setDateTo(formatter.format(endDate));
+                    leaveDetail.setAvailableVL(uid);
+                    leaveDetail.setAvailableSL(uid);
+                    leaveDetail.setAvailableEL(uid);
+                    leaveDetail.setLeaveDescription(leaveDescription);
+                    leaveDetail.setLeaveStatus("Applied");
+
+
+                    // add the leave detail to the array
+                    leavesList.add(leaveDetail);
+
+                    // save the leave data to the CSV file
+                    try {
+						writeCsvFiles.updateLeaves(leavesList);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+                    // clear the input fields
+                    clearFields();
+
+                    // display success message
+                    JOptionPane.showMessageDialog(null, "Leave filed successfully.", "Leave Filed",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    updateTableData(uid);
+                }
+            }
+        });
+
+
+        setSize(600, 400);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    /**
+     * Method to clear the input fields.
+     */
+    private void clearFields() {
+        comboBoxLeaveType.setSelectedIndex(0);
+        txtStartDate.setDate(null);
+        txtEndDate.setDate(null);
+        txtLeaveDescription.setText("");
+    }
+
+    /**
+     * Main method to run the application.
+     * 
+     * @param args
+     */
+    public static void main(String[] args) {
+    	String uid = "10001";
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    JpLeaveApplication window = new JpLeaveApplication(uid);
+                    window.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    public void updateTableData(String uid) {
+        // Clear the existing rows from the table
+    	model = new DefaultTableModel();
+        model.setRowCount(0);
+
+        // Retrieve the updated leaves list
+        List<employeeLeaves> leavesList = readCsvFiles.employeeLeaves();
+
+        // Filter the leaves list based on the UID
+        List<employeeLeaves> filteredList = leavesList.stream()
+            .filter(leaves -> leaves.getEmpid().equals(uid))
+            .collect(Collectors.toList());
+
+        // Populate the table with the filtered leaves data
+		for (employeeLeaves leave : filteredList) {
+			model.addRow(new Object[] { leave.getEmpid(), leave.getLeaveType(), leave.getDateFrom(), leave.getDateTo(),
+					leave.getAvailableVL(), leave.getAvailableSL(), leave.getAvailableEL(), leave.getLeaveDescription(),
+					leave.getLeaveStatus() });
+		}
+
+        // Notify the table of the data changes
+        model.fireTableDataChanged();
+    }
 }
