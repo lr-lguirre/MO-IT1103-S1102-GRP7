@@ -505,19 +505,13 @@ public class JpLeaveApplication extends JFrame {
 	 * 
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		String uid = "10001";
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JpLeaveApplication window = new JpLeaveApplication(uid);
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	/*
+	 * public static void main(String[] args) { String uid = "10001";
+	 * EventQueue.invokeLater(new Runnable() { public void run() { try {
+	 * JpLeaveApplication window = new JpLeaveApplication(uid);
+	 * window.setVisible(true); } catch (Exception e) { e.printStackTrace(); } } });
+	 * }
+	 */
 
 	public void updateTableData(String uid) {
 		// Clear the existing rows from the table
